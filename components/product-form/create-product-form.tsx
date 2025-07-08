@@ -2,6 +2,10 @@
 
 import { Form } from "@heroui/form";
 import { useActionState } from "react";
+import { addProduct } from "@/actions/product-form/actions";
+import ErrorDisplay, {
+  hasError,
+} from "@/components/product-form/error-display";
 import ProductFormHeader from "@/components/product-form/product-form-header";
 import ProductTitle from "@/components/product-form/product-title";
 import ProductDescription from "@/components/product-form/product-description";
@@ -11,7 +15,6 @@ import ProductImages from "@/components/product-form/product-images";
 import ProductPrice from "@/components/product-form/product-price";
 import ProductDiscount from "@/components/product-form/product-discount";
 import ProductFormFooter from "@/components/product-form/product-form-footer";
-import { addProduct } from "@/actions/product-form/actions";
 
 const initialState = {
   message: "",
@@ -31,7 +34,7 @@ export default function CreateProductForm() {
         <ProductImages />
         <ProductPrice />
         <ProductDiscount />
-        <ProductFormFooter />
+        <ProductFormFooter state={state} />
       </Form>
     </section>
   );
