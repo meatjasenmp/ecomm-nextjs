@@ -6,7 +6,7 @@ export default function ErrorDisplay({
   message,
 }: {
   errors: ErrorProperties;
-  message?: string;
+  message: string;
 }) {
   return (
     <div className="rounded-md bg-red-50 p-4 mb-8">

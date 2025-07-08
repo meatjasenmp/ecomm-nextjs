@@ -12,7 +12,7 @@ export default function ProductFormFooter({ state }: FooterProps) {
   return (
     <footer className="mt-6 w-full">
       {state?.error && (
-        <ErrorDisplay errors={state.error} message={state?.message} />
+        <ErrorDisplay errors={state.error} message={state.message} />
       )}
       <Button type="submit">Save</Button>
     </footer>
