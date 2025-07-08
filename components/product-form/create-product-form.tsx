@@ -22,7 +22,7 @@ export const initialFormState = {
 export default function CreateProductForm() {
   const [state, formAction] = useActionState(addProduct, initialFormState);
   return (
-    <section className="w-full max-w-4xl mx-auto p-4 bg-white shadow-md rounded-lg">
+    <section className="w-full max-w-4xl mx-auto p-10 border-1  border-gray-900/10 rounded">
       <ProductFormHeader header="Create Product" />
       <Form action={formAction}>
         <ProductTitle isInvalid={validateInput(state?.error, "title")} />
