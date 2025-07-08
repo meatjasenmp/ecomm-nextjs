@@ -2,6 +2,7 @@
 
 import { Select, SelectItem } from "@heroui/select";
 import InputContainer from "@/components/product-form/input-container";
+import { InputValidation } from "@/components/product-form/types";
 
 const categories = [
   { key: "nike", label: "Nike" },
@@ -10,13 +11,14 @@ const categories = [
   { key: "reebok", label: "Reebok" },
 ];
 
-export default function ProductCategories() {
+export default function ProductCategories({ isInvalid }: InputValidation) {
   return (
     <InputContainer>
       <Select
         placeholder="Select categories"
         selectionMode="multiple"
         variant="underlined"
+        isInvalid={isInvalid}
       >
         {categories.map((cat) => (
           <SelectItem key={cat.key}>{cat.label}</SelectItem>

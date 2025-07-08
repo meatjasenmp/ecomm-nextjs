@@ -12,6 +12,7 @@ export const ProductSchema = z.object({
   categories: z
     .custom<Category>()
     .array()
+    .min(1, "At least one category is required")
     .transform((categories) => parseCategories(categories)),
   images: z
     .custom<Image | File>()

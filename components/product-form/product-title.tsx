@@ -1,7 +1,8 @@
 import { Input } from "@heroui/input";
 import InputContainer from "@/components/product-form/input-container";
+import { InputValidation } from "@/components/product-form/types";
 
-export default function ProductTitle() {
+export default function ProductTitle({ isInvalid }: InputValidation) {
   return (
     <InputContainer>
       <Input
@@ -9,6 +10,7 @@ export default function ProductTitle() {
         label="Product Title"
         type="text"
         variant="underlined"
+        isInvalid={isInvalid}
       />
     </InputContainer>
   );

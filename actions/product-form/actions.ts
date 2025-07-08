@@ -43,7 +43,6 @@ export async function addProduct(
   if (!success) {
     return { message: "Invalid Product", error: getErrors(error) };
   }
-
   const product = data as Product;
   product.images = await getProductImages(form.getAll("images") as File[]);
   console.info("Product Images:", product.images);

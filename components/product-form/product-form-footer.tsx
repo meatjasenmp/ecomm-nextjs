@@ -10,7 +10,7 @@ interface FooterProps {
 
 export default function ProductFormFooter({ state }: FooterProps) {
   return (
-    <footer className="flex justify-end mt-6 w-full">
+    <footer className="mt-6 w-full">
       <h5>{state?.message}</h5>
       {state?.error && <ErrorDisplay errors={state.error} />}
       <Button type="submit">Save</Button>
