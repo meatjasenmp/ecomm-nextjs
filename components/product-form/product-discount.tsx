@@ -1,15 +1,10 @@
 import { Input } from "@heroui/input";
 import InputContainer from "@/components/product-form/input-container";
 
-export default function ProductTitle() {
+export default function ProductDiscount() {
   return (
     <InputContainer>
-      <Input
-        className="w-full"
-        label="Product Title"
-        type="text"
-        variant="underlined"
-      />
+      <Input label="Product Discount" type="number" variant="underlined" />
     </InputContainer>
   );
 }
