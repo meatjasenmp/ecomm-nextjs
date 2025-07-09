@@ -6,8 +6,7 @@ import ErrorDisplay from "@/components/product-form/error-display";
 export default function ProductTitle() {
   const [value, setValue] = useState<string>("");
   const errors: string[] = [];
-
-  if (value.length > 1 && value.length < 10) {
+  if (value.length > 0 && value.length < 10) {
     errors.push("The Product Title must be at least 10 characters long.");
   }
 
