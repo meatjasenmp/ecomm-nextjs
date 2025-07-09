@@ -17,6 +17,7 @@ export default function ProductDescription() {
         label="Description"
         variant="underlined"
         errorMessage={() => <ErrorDisplay errors={errors} />}
+        description="Enter a concise description of the product."
         isRequired
         value={value}
         onChange={(e) => setValue(e.target.value)}
