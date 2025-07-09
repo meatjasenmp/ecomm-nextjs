@@ -12,12 +12,13 @@ import ProductImages from "@/components/product-form/product-images";
 import ProductPrice from "@/components/product-form/product-price";
 import ProductDiscount from "@/components/product-form/product-discount";
 import ProductFormFooter from "@/components/product-form/product-form-footer";
+import { CategoriesProps } from "@/app/admin/products/create/page";
 
 export const initialFormState = {
   message: "",
 };
 
-export default function CreateProductForm() {
+export default function CreateProductForm({ categories }: CategoriesProps) {
   const [_, formAction] = useActionState(addProduct, initialFormState);
 
   return (
@@ -27,7 +28,7 @@ export default function CreateProductForm() {
         <ProductTitle />
         <ProductDescription />
         <ProductShortDescription />
-        <ProductCategories />
+        <ProductCategories categories={categories} />
         <ProductImages />
         <ProductPrice />
         <ProductDiscount />

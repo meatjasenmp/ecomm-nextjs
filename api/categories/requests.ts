@@ -1,4 +1,4 @@
-import { Category } from "@/app/api/categories/types";
+import { Category } from "@/api/categories/types";
 
 export async function fetchCategories() {
   const response = await fetch(`${process.env.API_URL}/categories`, {
