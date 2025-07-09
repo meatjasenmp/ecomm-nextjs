@@ -6,25 +6,20 @@ import { refineImageFiles } from "../images/utilities";
 
 export const ProductSchema = z.object({
   _id: z.string().optional(),
-  title: z.string().min(5, "A title is required"),
-  description: z.string().min(10, "A description is required"),
-  shortDescription: z.string().min(5, "A short description is required"),
+  title: z.string().min(5),
+  description: z.string().min(10),
+  shortDescription: z.string(),
   categories: z
     .custom<Category>()
     .array()
-    .min(1, "At least one category is required")
+    .min(1)
     .transform((categories) => parseCategories(categories)),
   images: z
     .custom<Image | File>()
     .array()
-    .refine((images) => refineImageFiles([...images]), {
-      message: "At least one image is required",
-    }),
-  price: z
-    .number()
-    .gt(0, "A Product price is required")
-    .min(0, "Price must be a positive number"),
-  discount: z.number().min(0, "Price must be a positive number").optional(),
+    .refine((images) => refineImageFiles([...images])),
+  price: z.number().gt(0).min(0),
+  discount: z.number().min(0).optional(),
   isPublished: z.boolean(),
 });
 

@@ -1,16 +1,10 @@
-import { Input } from "@heroui/input";
+import { Input } from "@heroui/react";
 import InputContainer from "@/components/product-form/input-container";
-import { InputValidation } from "@/components/product-form/types";
 
-export default function ProductPrice({ isInvalid }: InputValidation) {
+export default function ProductPrice() {
   return (
     <InputContainer>
-      <Input
-        label="Product Price"
-        type="number"
-        variant="underlined"
-        isInvalid={isInvalid}
-      />
+      <Input label="Product Price" type="number" variant="underlined" />
     </InputContainer>
   );
 }

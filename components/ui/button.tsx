@@ -1,5 +1,5 @@
 import React from "react";
-import { Button as Btn } from "@heroui/button";
+import { Button as Btn } from "@heroui/react";
 
 interface ButtonProps {
   type?: "button" | "submit" | "reset";

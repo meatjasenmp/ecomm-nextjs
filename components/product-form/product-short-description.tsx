@@ -1,4 +1,4 @@
-import { Textarea } from "@heroui/input";
+import { Textarea } from "@heroui/react";
 import InputContainer from "@/components/product-form/input-container";
 import { useState } from "react";
 

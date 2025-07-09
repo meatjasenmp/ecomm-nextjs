@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Textarea } from "@heroui/input";
+import { Textarea } from "@heroui/react";
 import InputContainer from "@/components/product-form/input-container";
 import ErrorDisplay from "@/components/product-form/error-display";
 
