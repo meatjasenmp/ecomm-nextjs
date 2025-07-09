@@ -8,6 +8,7 @@ export default function ProductShortDescription() {
         name="short-description"
         label="Short Description"
         variant="underlined"
+        description="Optional short description of the product."
       />
     </InputContainer>
   );
