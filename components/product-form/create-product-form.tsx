@@ -1,7 +1,6 @@
 "use client";
 
 import { Form } from "@heroui/form";
-import { validateInput } from "@/components/product-form/helpers";
 import { useActionState } from "react";
 import { addProduct } from "@/actions/product-form/actions";
 import ProductFormHeader from "@/components/product-form/product-form-header";
@@ -16,28 +15,23 @@ import ProductFormFooter from "@/components/product-form/product-form-footer";
 
 export const initialFormState = {
   message: "",
-  error: undefined,
 };
 
 export default function CreateProductForm() {
-  const [state, formAction] = useActionState(addProduct, initialFormState);
+  const [_, formAction] = useActionState(addProduct, initialFormState);
 
   return (
     <section className="w-full max-w-4xl mx-auto p-10 border-1  border-gray-900/10 rounded">
       <ProductFormHeader header="Create Product" />
       <Form action={formAction}>
-        <ProductTitle isInvalid={validateInput(state?.error, "title")} />
-        <ProductDescription
-          isInvalid={validateInput(state?.error, "description")}
-        />
+        <ProductTitle />
+        <ProductDescription />
         <ProductShortDescription />
-        <ProductCategories
-          isInvalid={validateInput(state?.error, "categories")}
-        />
-        <ProductImages isInvalid={validateInput(state?.error, "images")} />
-        <ProductPrice isInvalid={validateInput(state?.error, "price")} />
+        <ProductCategories />
+        <ProductImages />
+        <ProductPrice />
         <ProductDiscount />
-        <ProductFormFooter state={state} />
+        <ProductFormFooter />
       </Form>
     </section>
   );
