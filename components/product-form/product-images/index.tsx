@@ -11,8 +11,6 @@ export default function ProductImages() {
     if (files && files.length > 0) setImages([...images, ...Array.from(files)]);
   };
 
-  console.info("Selected images:", images);
-
   return (
     <InputContainer>
       <label htmlFor="productImage" className="text-small text-foreground-500">
