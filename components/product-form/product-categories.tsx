@@ -5,6 +5,7 @@ import { Selection, Select, SelectItem } from "@heroui/react";
 import InputContainer from "@/components/product-form/input-container";
 import { CategoriesProps } from "@/app/admin/products/create/page";
 
+// TODO: Only getting the keys here, will have to convert to the full category object in api requests
 export default function ProductCategories({ categories }: CategoriesProps) {
   const [selected, setSelected] = useState<Selection>(new Set([]));
   const [touched, setTouched] = useState<boolean>(false);
