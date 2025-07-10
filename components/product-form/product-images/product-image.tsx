@@ -1,4 +1,12 @@
-export default function ProductImage() {
+import { Input } from "@heroui/react";
+import React from "react";
+
+type ProductImageProps = {
+  setImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isValid: boolean;
+};
+
+export default function ProductImage({ setImage, isValid }: ProductImageProps) {
   return (
     <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 grow  py-10">
       <div className="text-center">
@@ -21,11 +29,14 @@ export default function ProductImage() {
             className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
           >
             <span>Upload a file</span>
-            <input
+            <Input
               id="file-upload"
               name="file-upload"
               type="file"
               className="sr-only"
+              accept="image/png, image/jpeg, image/gif"
+              onChange={setImage}
+              isInvalid={!isValid}
             />
           </label>
           <p className="pl-1">or drag and drop</p>
