@@ -6,8 +6,8 @@ import ErrorDisplay from "@/components/product-form/error-display";
 export default function ProductDescription() {
   const [value, setValue] = useState<string>("");
   let error: string = "";
-  const isValid = useMemo(() => value.length > 0 && value.length < 5, [value]);
-  if (isValid) error = "Title must be at least 5 characters long.";
+  const isValid = useMemo(() => value.length > 0 && value.length < 10, [value]);
+  if (isValid) error = "Description must be at least 10 characters long.";
 
   return (
     <InputContainer>
