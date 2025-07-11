@@ -3,14 +3,13 @@ import ProductImage from "@/components/product-form/product-images/product-image
 import InputContainer from "@/components/product-form/input-container";
 import ErrorDisplay from "@/components/product-form/error-display";
 
-// TODO: Next steps: Validation for image sizes, and display selected images.
+// TODO: Next steps: Validation for image sizes. Styling.
 export default function ProductImages() {
   const [images, setImages] = useState<File[]>([]);
   const [touched, setTouched] = useState<boolean>(false);
   const isValid = useMemo(() => images.length > 0, [images]);
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) setImages([...images, ...Array.from(files)]);
+    setImages([...images, e.target.files?.[0]!]);
   };
 
   return (
