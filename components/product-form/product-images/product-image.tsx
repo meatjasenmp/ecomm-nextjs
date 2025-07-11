@@ -20,17 +20,16 @@ export default function ProductImage({
   setTouched,
   isValid,
 }: ProductImageProps) {
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<string[]>([]);
+  const [imageUrl, setImageUrl] = useState<string>("");
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (!files) return;
-    const urls = Array.from(files).map((file) => URL.createObjectURL(file));
-    setImagePreviewUrl((prev) => [...prev, ...urls]);
+    const file = event.target.files?.[0];
+    if (!file) return;
+    setImageUrl(URL.createObjectURL(file));
     setImage(event);
   };
 
-  if (imagePreviewUrl.length > 0) {
-    return <ProductImagePreview src={imagePreviewUrl[0]} />;
+  if (imageUrl.length > 0) {
+    return <ProductImagePreview src={imageUrl} />;
   }
 
   return (
