@@ -15,13 +15,13 @@ export default function ProductImages() {
 
   return (
     <InputContainer>
-      <label htmlFor="productImage" className="text-small text-foreground-500">
+      <p className="text-small text-foreground-500">
         Product Images: Upload at least one image
-        {!(isValid || !touched) && (
-          <ErrorDisplay error="No images were selected." />
-        )}
-      </label>
-      <div className="flex flex-wrap gap-4">
+      </p>
+      {!(isValid || !touched) && (
+        <ErrorDisplay error="No images were selected." />
+      )}
+      <div className="flex gap-1">
         <ProductImage
           setImage={handleImageChange}
           isValid={!(isValid || !touched)}
