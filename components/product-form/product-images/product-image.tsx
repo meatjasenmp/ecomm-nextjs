@@ -1,5 +1,5 @@
 import { Input } from "@heroui/react";
-import React from "react";
+import React, { useState } from "react";
 
 type ProductImageProps = {
   setImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -7,11 +7,32 @@ type ProductImageProps = {
   isValid: boolean;
 };
 
+function ProductImagePreview({ src }: { src: string }) {
+  return (
+    <div>
+      <img src={src} alt="Preview" />
+    </div>
+  );
+}
+
 export default function ProductImage({
   setImage,
   setTouched,
   isValid,
 }: ProductImageProps) {
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string[]>([]);
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
+    const urls = Array.from(files).map((file) => URL.createObjectURL(file));
+    setImagePreviewUrl((prev) => [...prev, ...urls]);
+    setImage(event);
+  };
+
+  if (imagePreviewUrl.length > 0) {
+    return <ProductImagePreview src={imagePreviewUrl[0]} />;
+  }
+
   return (
     <div
       className={`mt-2 flex justify-center rounded-lg border border-dashed ${isValid ? "border-red-500" : "border-gray-900/25"} px-6 grow  py-10`}
@@ -42,7 +63,7 @@ export default function ProductImage({
               type="file"
               className="sr-only"
               accept="image/png, image/jpeg, image/gif"
-              onChange={setImage}
+              onChange={handleImageChange}
               isRequired
               onBlur={() => setTouched(true)}
             />
