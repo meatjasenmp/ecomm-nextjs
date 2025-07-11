@@ -3,12 +3,19 @@ import React from "react";
 
 type ProductImageProps = {
   setImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setTouched: React.Dispatch<React.SetStateAction<boolean>>;
   isValid: boolean;
 };
 
-export default function ProductImage({ setImage, isValid }: ProductImageProps) {
+export default function ProductImage({
+  setImage,
+  setTouched,
+  isValid,
+}: ProductImageProps) {
   return (
-    <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 grow  py-10">
+    <div
+      className={`mt-2 flex justify-center rounded-lg border border-dashed ${isValid ? "border-red-500" : "border-gray-900/25"} px-6 grow  py-10`}
+    >
       <div className="text-center">
         <svg
           className="mx-auto size-12 text-gray-300"
@@ -36,7 +43,8 @@ export default function ProductImage({ setImage, isValid }: ProductImageProps) {
               className="sr-only"
               accept="image/png, image/jpeg, image/gif"
               onChange={setImage}
-              isInvalid={!isValid}
+              isRequired
+              onBlur={() => setTouched(true)}
             />
           </label>
           <p className="pl-1">or drag and drop</p>

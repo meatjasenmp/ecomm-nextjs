@@ -18,9 +18,7 @@ export default function ProductCategories({ categories }: CategoriesProps) {
         placeholder="Select categories"
         description="Select one or more categories for the product."
         errorMessage={
-          isValid || !touched
-            ? undefined
-            : "Please select at least one category."
+          isValid || !touched ? undefined : "Select at least one category."
         }
         isInvalid={!(isValid || !touched)}
         selectionMode="multiple"
