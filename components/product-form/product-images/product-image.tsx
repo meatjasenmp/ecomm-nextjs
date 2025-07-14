@@ -6,46 +6,28 @@ import { ImageValidationError, validateImage } from "./helpers";
 
 import ErrorDisplay from "@/components/product-form/error-display";
 
-type ProductImageProps = {
-  setImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setTouched: React.Dispatch<React.SetStateAction<boolean>>;
-  isValid: boolean;
-};
-
-export default function ProductImage({
-  setImage,
-  setTouched,
-  isValid,
-}: ProductImageProps) {
+export default function ProductImage() {
   const [imageUrl, setImageUrl] = useState<string>("");
-  const [validationError, setValidationError] =
-    useState<ImageValidationError | null>(null);
+  const [error, setError] = useState<ImageValidationError | null>(null);
 
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    setValidationError(null);
-    const error = await validateImage(file);
+    const selectedFile = event.target.files?.[0];
+    if (!selectedFile) return;
+    setError(null);
+    const error = await validateImage(selectedFile);
     if (error) {
-      setValidationError(error);
+      setError(error);
       setImageUrl("");
       return;
     }
-    setImageUrl(URL.createObjectURL(file));
-    setImage(event);
+    setImageUrl(URL.createObjectURL(selectedFile));
   };
 
   const handleRemove = () => {
     setImageUrl("");
-    setValidationError(null);
-    const emptyEvent = {
-      target: {
-        files: null,
-      },
-    } as React.ChangeEvent<HTMLInputElement>;
-    setImage(emptyEvent);
+    setError(null);
   };
 
   if (imageUrl.length > 0) {
@@ -55,19 +37,18 @@ export default function ProductImage({
   return (
     <div className="w-1/3">
       <div
-        className={`mt-2 flex justify-center rounded-lg border border-dashed ${isValid || validationError ? "border-red-500" : "border-gray-900/25"} px-6  py-10`}
+        className={`mt-2 flex justify-center rounded-lg border border-dashed ${error ? "border-red-500" : "border-gray-900/25"} px-6  py-10`}
       >
         <Input
           isRequired
           accept="image/png, image/jpeg, image/gif"
-          id="file-upload"
-          name="file-upload"
+          id="product-image"
+          name="product-image"
           type="file"
-          onBlur={() => setTouched(true)}
           onChange={handleImageChange}
         />
       </div>
-      {validationError && <ErrorDisplay error={validationError.message} />}
+      {error && <ErrorDisplay error={error.message} />}
     </div>
   );
 }
