@@ -17,12 +17,9 @@ export default function ProductImage() {
     if (!selectedFile) return;
     setError(null);
     const error = await validateImage(selectedFile);
-    if (error) {
-      setError(error);
-      setImageUrl("");
-      return;
-    }
-    setImageUrl(URL.createObjectURL(selectedFile));
+    if (!error) return setImageUrl(URL.createObjectURL(selectedFile));
+    setError(error);
+    setImageUrl("");
   };
 
   const handleRemove = () => {
