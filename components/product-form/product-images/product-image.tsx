@@ -1,6 +1,7 @@
-import { Input, Image as Img } from "@heroui/react";
+import { Input } from "@heroui/react";
 import React, { useState } from "react";
 
+import ProductImagePreview from "./product-image-preview";
 import { ImageValidationError, validateImage } from "./helpers";
 
 import ErrorDisplay from "@/components/product-form/error-display";
@@ -10,10 +11,6 @@ type ProductImageProps = {
   setTouched: React.Dispatch<React.SetStateAction<boolean>>;
   isValid: boolean;
 };
-
-function ProductImagePreview({ src }: { src: string }) {
-  return <Img alt="Preview" className="w-1/3" src={src} />;
-}
 
 export default function ProductImage({
   setImage,
@@ -40,8 +37,19 @@ export default function ProductImage({
     setImage(event);
   };
 
+  const handleRemove = () => {
+    setImageUrl("");
+    setValidationError(null);
+    const emptyEvent = {
+      target: {
+        files: null,
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
+    setImage(emptyEvent);
+  };
+
   if (imageUrl.length > 0) {
-    return <ProductImagePreview src={imageUrl} />;
+    return <ProductImagePreview src={imageUrl} onRemove={handleRemove} />;
   }
 
   return (
