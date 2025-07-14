@@ -12,7 +12,7 @@ export default function ProductImagePreview({
   onRemove: () => void;
 }) {
   return (
-    <div className="w-1/3 relative">
+    <div>
       <Img alt="Preview" className="w-full rounded-lg" src={src} />
       <div className="absolute top-2 right-2 z-10">
         <Button iconOnly={true} variant="solid" onClick={onRemove}>

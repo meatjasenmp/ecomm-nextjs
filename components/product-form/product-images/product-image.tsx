@@ -27,23 +27,24 @@ export default function ProductImage() {
     setError(null);
   };
 
-  if (imageUrl.length > 0) {
-    return <ProductImagePreview src={imageUrl} onRemove={handleRemove} />;
-  }
-
   return (
     <div className="w-1/3">
       <div
-        className={`mt-2 flex justify-center rounded-lg border border-dashed ${error ? "border-red-500" : "border-gray-900/25"} px-6  py-10`}
+        className={`mt-2 flex relative justify-center rounded-lg border border-dashed ${error ? "border-red-500" : "border-gray-900/25"} px-6  py-10`}
       >
-        <Input
-          isRequired
-          accept="image/png, image/jpeg, image/gif"
-          id="product-image"
-          name="product-image"
-          type="file"
-          onChange={handleImageChange}
-        />
+        {imageUrl.length > 0 && (
+          <ProductImagePreview src={imageUrl} onRemove={handleRemove} />
+        )}
+        {imageUrl.length === 0 && (
+          <Input
+            isRequired
+            accept="image/png, image/jpeg, image/gif"
+            id="product-image"
+            name="product-image"
+            type="file"
+            onChange={handleImageChange}
+          />
+        )}
       </div>
       {error && <ErrorDisplay error={error.message} />}
     </div>
