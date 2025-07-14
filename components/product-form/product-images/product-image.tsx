@@ -3,6 +3,8 @@ import React, { useState } from "react";
 
 import { ImageValidationError, validateImage } from "./helpers";
 
+import ErrorDisplay from "@/components/product-form/error-display";
+
 type ProductImageProps = {
   setImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setTouched: React.Dispatch<React.SetStateAction<boolean>>;
@@ -57,9 +59,7 @@ export default function ProductImage({
           onChange={handleImageChange}
         />
       </div>
-      {validationError && (
-        <p className="mt-2 text-tiny text-red-600">{validationError.message}</p>
-      )}
+      {validationError && <ErrorDisplay error={validationError.message} />}
     </div>
   );
 }
