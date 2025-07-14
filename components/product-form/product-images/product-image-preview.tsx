@@ -12,8 +12,8 @@ export default function ProductImagePreview({
   onRemove: () => void;
 }) {
   return (
-    <div>
-      <Img alt="Preview" className="w-full rounded-lg" src={src} />
+    <div className="h-40">
+      <Img alt="Preview" className="w-full rounded-lg h-full" src={src} />
       <div className="absolute top-2 right-2 z-10">
         <Button iconOnly={true} variant="solid" onClick={onRemove}>
           <CloseIcon />
