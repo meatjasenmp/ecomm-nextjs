@@ -15,7 +15,7 @@ export default function ProductImagePreview({
     <div className="w-1/3 relative">
       <Img alt="Preview" className="w-full rounded-lg" src={src} />
       <div className="absolute top-2 right-2 z-10">
-        <Button onClick={onRemove}>
+        <Button iconOnly={true} variant="solid" onClick={onRemove}>
           <CloseIcon />
         </Button>
       </div>

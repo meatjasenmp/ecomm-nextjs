@@ -7,6 +7,7 @@ interface ButtonProps {
   disabled?: boolean;
   onClick?: () => void;
   variant?: "solid" | "light" | "flat" | "ghost";
+  iconOnly?: boolean;
 }
 
 export default function Button({
@@ -14,12 +15,14 @@ export default function Button({
   children,
   disabled,
   onClick,
+  iconOnly,
   variant,
 }: ButtonProps) {
   return (
     <Btn
       color="default"
       disabled={disabled}
+      isIconOnly={iconOnly}
       type={type || "button"}
       variant={variant || "ghost"}
       onPress={onClick}
