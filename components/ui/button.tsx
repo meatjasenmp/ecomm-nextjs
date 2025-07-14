@@ -10,10 +10,10 @@ interface ButtonProps {
 export default function Button({ type, children, disabled }: ButtonProps) {
   return (
     <Btn
-      type={type || "button"}
       color="default"
-      variant="ghost"
       disabled={disabled}
+      type={type || "button"}
+      variant="ghost"
     >
       {children}
     </Btn>

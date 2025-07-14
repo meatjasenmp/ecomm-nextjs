@@ -2,7 +2,9 @@ import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
 import React from "react";
+
 import { Providers } from "./providers";
+
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 
@@ -43,7 +45,7 @@ export default function RootLayout({
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
               {children}
             </main>
-            <footer className="w-full flex items-center justify-center py-3"></footer>
+            <footer className="w-full flex items-center justify-center py-3" />
           </div>
         </Providers>
       </body>

@@ -8,5 +8,6 @@ export type CategoriesProps = {
 
 export default async function Page() {
   const categories = await fetchCategories();
+
   return <CreateProductForm categories={categories} />;
 }

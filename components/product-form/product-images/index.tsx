@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+
 import ProductImage from "@/components/product-form/product-images/product-image";
 import InputContainer from "@/components/product-form/input-container";
 import ErrorDisplay from "@/components/product-form/error-display";
@@ -22,18 +23,18 @@ export default function ProductImages() {
       )}
       <div className="flex gap-1">
         <ProductImage
-          setImage={handleImageChange}
           isValid={!(isValid || !touched)}
+          setImage={handleImageChange}
           setTouched={setTouched}
         />
         <ProductImage
-          setImage={handleImageChange}
           isValid={!(isValid || !touched)}
+          setImage={handleImageChange}
           setTouched={setTouched}
         />
         <ProductImage
-          setImage={handleImageChange}
           isValid={!(isValid || !touched)}
+          setImage={handleImageChange}
           setTouched={setTouched}
         />
       </div>

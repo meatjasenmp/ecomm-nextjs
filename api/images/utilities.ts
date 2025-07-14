@@ -10,6 +10,7 @@ export async function getProductImages(images: File[]): Promise<Image[]> {
     return await uploadImagesRequest(images);
   } catch (error) {
     console.error("Error uploading images:", error);
+
     return [];
   }
 }

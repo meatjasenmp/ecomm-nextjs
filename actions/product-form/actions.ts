@@ -1,11 +1,12 @@
 "use server";
 
+import { ZodError, ZodSafeParseResult } from "zod/v4";
+import z from "zod/v4";
+
 import { createProductRequest } from "@/api/products/requests";
 import { getProductImages } from "@/api/images/utilities";
 import { ProductSchema, Product } from "@/api/products/types";
 import { ErrorProperties } from "@/actions/product-form/types";
-import { ZodError, ZodSafeParseResult } from "zod/v4";
-import z from "zod/v4";
 
 function parseFormData(form: FormData): ZodSafeParseResult<Product> {
   return ProductSchema.safeParse({
@@ -26,13 +27,12 @@ async function createProduct(
   try {
     await createProductRequest(product);
   } catch (error) {
-    return { message: "Error creating product" };
+    return { message: `Error creating product: ${error}` };
   }
 }
 
 function getErrors(error: ZodError<Product>): ErrorProperties {
-  const errors = z.treeifyError(error);
-  return errors.properties;
+  return z.treeifyError(error).properties;
 }
 
 export async function addProduct(
@@ -45,7 +45,6 @@ export async function addProduct(
   }
   const product = data as Product;
   product.images = await getProductImages(form.getAll("images") as File[]);
-  console.info("Product Images:", product.images);
   await createProduct(product);
   return { message: "Product created successfully" };
 }

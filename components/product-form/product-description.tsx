@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Textarea } from "@heroui/react";
+
 import InputContainer from "@/components/product-form/input-container";
 import ErrorDisplay from "@/components/product-form/error-display";
 
@@ -12,15 +13,16 @@ export default function ProductDescription() {
   return (
     <InputContainer>
       <Textarea
-        name="description"
-        label="Description"
-        variant="underlined"
-        errorMessage={() => <ErrorDisplay error={error} />}
-        description="Enter a concise description of the product."
         isRequired
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        description="Enter a concise description of the product."
+        errorMessage={() => <ErrorDisplay error={error} />}
+        id="productdescription"
         isInvalid={error.length > 0}
+        label="Description"
+        name="description"
+        value={value}
+        variant="underlined"
+        onChange={(e) => setValue(e.target.value)}
       />
     </InputContainer>
   );

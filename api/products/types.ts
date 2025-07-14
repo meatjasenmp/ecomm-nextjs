@@ -1,4 +1,5 @@
 import { z } from "zod/v4";
+
 import { parseCategories } from "../categories/utilities";
 import { Category } from "../categories/types";
 import { Image } from "../images/types";

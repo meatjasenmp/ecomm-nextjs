@@ -1,6 +1,7 @@
 import { Textarea } from "@heroui/react";
-import InputContainer from "@/components/product-form/input-container";
 import { useState } from "react";
+
+import InputContainer from "@/components/product-form/input-container";
 
 export default function ProductShortDescription() {
   const [value, setValue] = useState<string>("");
@@ -8,11 +9,12 @@ export default function ProductShortDescription() {
   return (
     <InputContainer>
       <Textarea
-        name="short-description"
-        label="Short Description"
-        variant="underlined"
         description="Optional short description of the product."
+        id="product-short-description"
+        label="Short Description"
+        name="short-description"
         value={value}
+        variant="underlined"
         onChange={(e) => setValue(e.target.value)}
       />
     </InputContainer>
