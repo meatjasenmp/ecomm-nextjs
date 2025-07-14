@@ -44,13 +44,11 @@ export const validateImage = (
 
     img.onload = () => {
       const { width, height } = img;
-
       if (width > MAX_WIDTH || height > MAX_HEIGHT) {
         resolve({
           message: `Image dimensions must be less than ${MAX_WIDTH}x${MAX_HEIGHT}px`,
           type: "dimensions",
         });
-
         return;
       }
 
@@ -59,10 +57,8 @@ export const validateImage = (
           message: `Image dimensions must be at least ${MIN_WIDTH}x${MIN_HEIGHT}px`,
           type: "dimensions",
         });
-
         return;
       }
-
       resolve(null);
     };
 
