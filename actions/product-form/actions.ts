@@ -1,51 +1,42 @@
 "use server";
 
-import { ZodError, ZodSafeParseResult } from "zod/v4";
-import z from "zod/v4";
+import { z } from "zod/v4";
 
 import { createProductRequest } from "@/api/products/requests";
+import { Category } from "@/api/categories/types";
 import { ProductSchema, Product } from "@/api/products/types";
-import { ErrorProperties } from "@/actions/product-form/types";
 
-function parseFormData(form: FormData): ZodSafeParseResult<Product> {
-  return ProductSchema.safeParse({
-    title: form.get("product-title"),
-    description: form.get("product-description"),
-    shortDescription: form.get("short-description"),
-    categories: form.getAll("product-categories"),
-    images: [form.getAll("product-image")],
-    price: Number(form.get("product-price")),
-    discount: Number(form.get("product-discount")),
-    isPublished: true,
-  });
-}
-
-async function createProduct(
-  product: Product,
-): Promise<void | { message: string }> {
+export async function submitProductForm(formData: {
+  title: string;
+  description: string;
+  shortDescription?: string;
+  categories: Category[];
+  images: File[];
+  price: number;
+  discount?: number;
+}) {
   try {
+    const validatedData = ProductSchema.parse(formData);
+    const product: Product = {
+      title: validatedData.title,
+      description: validatedData.description,
+      shortDescription: validatedData.shortDescription || "",
+      categories: validatedData.categories,
+      images: validatedData.images,
+      price: validatedData.price,
+      discount: validatedData.discount || 0,
+      isPublished: true,
+    };
     await createProductRequest(product);
+    return { success: true, message: "Product created successfully" };
   } catch (error) {
-    return { message: `Error creating product: ${error}` };
+    if (error instanceof z.ZodError) {
+      return {
+        success: false,
+        message: "Validation error",
+        errors: error.issues,
+      };
+    }
+    return { success: false, message: `Error creating product: ${error}` };
   }
-}
-
-function getErrors(error: ZodError<Product>): ErrorProperties {
-  console.info("Errors:", z.treeifyError(error).properties);
-  return z.treeifyError(error).properties;
-}
-
-export async function addProduct(
-  prevState: { message: string },
-  form: FormData,
-) {
-  const { success, error, data } = parseFormData(form);
-  if (!success) {
-    return { message: "Invalid Product", error: getErrors(error) };
-  }
-  const product = data as Product;
-  console.info("Adding product", product);
-  // product.images = await getProductImages(form.getAll("images") as File[]);
-  // await createProduct(product);
-  // return { message: "Product created successfully" };
 }

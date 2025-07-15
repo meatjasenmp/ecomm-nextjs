@@ -25,7 +25,6 @@ export async function getProductRequest(id: string) {
     const response = await fetch(`${process.env.API_URL}/product/${id}`);
     return (await response.json()) as Product;
   } catch (error) {
-    console.error("Error fetching product:", error);
-    return null;
+    return error;
   }
 }

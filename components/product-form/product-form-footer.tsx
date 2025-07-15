@@ -6,7 +6,6 @@ export default function ProductFormFooter() {
   const {
     formState: { isValid },
   } = useFormContext();
-  console.info("Form is valid:", isValid);
 
   return (
     <footer className="mt-6 w-full">

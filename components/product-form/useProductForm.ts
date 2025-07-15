@@ -1,0 +1,41 @@
+import { useForm } from "react-hook-form";
+
+import { submitProductForm } from "@/actions/product-form/actions";
+import { ProductFormData } from "@/components/product-form/types";
+
+export function useProductForm() {
+  const methods = useForm<ProductFormData>({
+    mode: "onChange",
+    defaultValues: {
+      title: "",
+      description: "",
+      shortDescription: "",
+      categories: [],
+      images: [],
+      price: 0,
+      discount: 0,
+    },
+  });
+
+  const onSubmit = async (data: ProductFormData) => {
+    const result = await submitProductForm(data);
+    if (result.success) {
+      methods.reset();
+    } else {
+      if ("errors" in result && result.errors) {
+        result.errors.forEach((error) => {
+          const fieldName = error.path[0] as keyof ProductFormData;
+          methods.setError(fieldName, {
+            type: "server",
+            message: error.message,
+          });
+        });
+      }
+    }
+  };
+
+  return {
+    methods,
+    onSubmit,
+  };
+}

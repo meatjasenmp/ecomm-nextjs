@@ -1,10 +1,8 @@
 "use client";
 
-import { Form } from "@heroui/form";
-import { useActionState } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 
-import { addProduct } from "@/actions/product-form/actions";
+import { useProductForm } from "@/components/product-form/useProductForm";
 import ProductFormHeader from "@/components/product-form/product-form-header";
 import ProductTitle from "@/components/product-form/product-title";
 import ProductDescription from "@/components/product-form/product-description";
@@ -16,40 +14,14 @@ import ProductDiscount from "@/components/product-form/product-discount";
 import ProductFormFooter from "@/components/product-form/product-form-footer";
 import { CategoriesProps } from "@/app/admin/products/create/page";
 
-export const initialFormState = {
-  message: "",
-};
-
-type FormData = {
-  title: string;
-  description: string;
-  shortDescription?: string;
-  categories: string[];
-  images: File[];
-  price: number;
-  discount?: number;
-};
-
 export default function CreateProductForm({ categories }: CategoriesProps) {
-  const [state, formAction] = useActionState(addProduct, initialFormState);
-  const methods = useForm<FormData>({
-    mode: "onChange",
-    defaultValues: {
-      title: "",
-      description: "",
-      shortDescription: "",
-      categories: [],
-      images: [],
-      price: 0,
-      discount: 0,
-    },
-  });
+  const { methods, onSubmit } = useProductForm();
 
   return (
     <FormProvider {...methods}>
       <section className="w-full max-w-4xl mx-auto p-10 border-1  border-gray-900/10 rounded">
         <ProductFormHeader header="Create Product" />
-        <Form action={formAction}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
           <ProductTitle />
           <ProductDescription />
           <ProductShortDescription />
@@ -58,7 +30,7 @@ export default function CreateProductForm({ categories }: CategoriesProps) {
           <ProductPrice />
           <ProductDiscount />
           <ProductFormFooter />
-        </Form>
+        </form>
       </section>
     </FormProvider>
   );
