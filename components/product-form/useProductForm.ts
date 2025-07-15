@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 
 import { ProductFormData } from "@/components/product-form/types";
-import { uploadImagesRequest } from "@/api/images/requests";
 import { submitProductForm } from "@/actions/product-form/actions";
+import { uploadImagesRequest } from "@/api/images/requests";
 
 export function useProductForm() {
   const methods = useForm<ProductFormData>({
