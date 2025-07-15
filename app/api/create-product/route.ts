@@ -1,17 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { apiRequest } from "@/lib/api-utils";
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const apiUrl = process.env.API_URL || "http://localhost:8080";
-
-    const response = await fetch(`${apiUrl}/create-product`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+    const response = await apiRequest("/create-product", "POST", body);
 
     if (!response.ok) {
       return NextResponse.json(
