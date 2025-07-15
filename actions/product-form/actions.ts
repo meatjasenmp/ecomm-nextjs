@@ -2,9 +2,9 @@
 
 import { z } from "zod/v4";
 
-import { createProductRequest } from "@/api/products/requests";
 import { Category } from "@/api/categories/types";
-import { ProductSchema, Product } from "@/api/products/types";
+import { ProductCreateSchema, ProductCreate } from "@/api/products/types";
+import { createProductRequest } from "@/api/products/requests";
 
 export async function submitProductForm(formData: {
   title: string;
@@ -16,8 +16,8 @@ export async function submitProductForm(formData: {
   discount?: number;
 }) {
   try {
-    const validatedData = ProductSchema.parse(formData);
-    const product: Product = {
+    const validatedData = ProductCreateSchema.parse(formData);
+    const product: ProductCreate = {
       title: validatedData.title,
       description: validatedData.description,
       shortDescription: validatedData.shortDescription || "",
