@@ -34,7 +34,6 @@ export default function ProductCategories({ categories }: CategoriesProps) {
 
           return (
             <Select
-              isRequired
               description="Select one or more categories for the product."
               errorMessage={() => <ErrorDisplay error={error || ""} />}
               id="product-categories"
