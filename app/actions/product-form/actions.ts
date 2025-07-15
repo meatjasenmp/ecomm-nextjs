@@ -2,9 +2,9 @@
 
 import { z } from "zod/v4";
 
-import { Category } from "@/api/categories/types";
-import { ProductSchema, Product } from "@/api/products/types";
-import { Image } from "@/api/images/types";
+import { Category } from "@/app/api/categories/types";
+import { ProductSchema, Product } from "@/app/api/products/types";
+import { Image } from "@/app/api/images/types";
 import { getInternalApiUrl, apiRequest } from "@/lib/api-utils";
 
 export async function submitProductForm(formData: {

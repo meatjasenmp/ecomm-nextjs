@@ -1,4 +1,4 @@
-import { Category } from "@/api/categories/types";
+import { Category } from "@/app/api/categories/types";
 
 export type ProductFormData = {
   title: string;
