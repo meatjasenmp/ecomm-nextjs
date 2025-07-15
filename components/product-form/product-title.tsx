@@ -8,7 +8,6 @@ export default function ProductTitle() {
   const [value, setValue] = useState<string>("");
   let error: string = "";
   const isValid = useMemo(() => value.length > 0 && value.length < 5, [value]);
-
   if (isValid) error = "Title must be at least 5 characters long.";
 
   return (
