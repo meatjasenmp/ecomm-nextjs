@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 
 import { ProductFormData } from "@/components/product-form/types";
 import { submitProductForm } from "@/app/actions/product-form/actions";
-import { getInternalApiUrl } from "@/lib/api-utils";
+import { apiRequest, getInternalApiUrl } from "@/lib/api-utils";
 import { Image } from "@/app/api/images/types";
 
 export function useProductForm() {
@@ -34,16 +34,11 @@ export function useProductForm() {
   const handleImages = async (images: File[]): Promise<Image[]> => {
     const formData = new FormData();
     images.forEach((image) => formData.append("images", image));
-    const uploadResponse = await fetch(getInternalApiUrl("/images"), {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!uploadResponse.ok) {
-      throw new Error(`Failed to upload images: ${uploadResponse.status}`);
-    }
-
-    return (await uploadResponse.json()) as Promise<Image[]>;
+    return (await apiRequest(
+      getInternalApiUrl("/images"),
+      "POST",
+      formData,
+    )) as Promise<Image[]>;
   };
 
   // TODO: Need to figure out why I'm not receiving server errors
