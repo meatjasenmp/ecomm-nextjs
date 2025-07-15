@@ -9,18 +9,19 @@ import { createProductRequest } from "@/api/products/requests";
 export async function submitProductForm(formData: {
   title: string;
   description: string;
-  shortDescription?: string;
+  shortDescription: string;
   categories: Category[];
   images: File[];
   price: number;
   discount?: number;
 }) {
+  console.info("Form Data:", formData);
   try {
     const validatedData = ProductCreateSchema.parse(formData);
     const product: ProductCreate = {
       title: validatedData.title,
       description: validatedData.description,
-      shortDescription: validatedData.shortDescription || "",
+      shortDescription: validatedData.shortDescription,
       categories: validatedData.categories,
       images: validatedData.images,
       price: validatedData.price,

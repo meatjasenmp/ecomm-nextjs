@@ -3,7 +3,7 @@ import { Category } from "@/api/categories/types";
 export type ProductFormData = {
   title: string;
   description: string;
-  shortDescription?: string;
+  shortDescription: string;
   categories: Category[];
   images: File[];
   price: number;
