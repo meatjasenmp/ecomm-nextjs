@@ -16,6 +16,7 @@ export default function ProductCategories({ categories }: CategoriesProps) {
   return (
     <InputContainer>
       <Select
+        isRequired
         description="Select one or more categories for the product."
         errorMessage={
           isValid || !touched ? undefined : "Select at least one category."
