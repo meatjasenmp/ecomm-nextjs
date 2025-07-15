@@ -10,13 +10,13 @@ import { ErrorProperties } from "@/actions/product-form/types";
 
 function parseFormData(form: FormData): ZodSafeParseResult<Product> {
   return ProductSchema.safeParse({
-    title: form.get("title"),
-    description: form.get("description"),
+    title: form.get("product-title"),
+    description: form.get("product-description"),
     shortDescription: form.get("short-description"),
-    categories: form.getAll("categories"),
-    images: [form.get("images")],
-    price: Number(form.get("price")),
-    discount: Number(form.get("discount")),
+    categories: form.getAll("product-categories"),
+    images: [form.getAll("product-image")],
+    price: Number(form.get("product-price")),
+    discount: Number(form.get("product-discount")),
     isPublished: true,
   });
 }

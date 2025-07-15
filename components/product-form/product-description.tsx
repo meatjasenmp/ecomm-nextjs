@@ -16,7 +16,7 @@ export default function ProductDescription() {
         isRequired
         description="Enter a concise description of the product."
         errorMessage={() => <ErrorDisplay error={error} />}
-        id="productdescription"
+        id="product-description"
         isInvalid={error.length > 0}
         label="Description"
         name="description"
