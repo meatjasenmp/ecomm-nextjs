@@ -21,7 +21,7 @@ export default function Button({
   return (
     <Btn
       color="default"
-      disabled={disabled}
+      isDisabled={disabled}
       isIconOnly={iconOnly}
       type={type || "button"}
       variant={variant || "ghost"}

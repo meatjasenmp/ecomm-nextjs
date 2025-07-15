@@ -4,7 +4,6 @@ import { ZodError, ZodSafeParseResult } from "zod/v4";
 import z from "zod/v4";
 
 import { createProductRequest } from "@/api/products/requests";
-import { getProductImages } from "@/api/images/utilities";
 import { ProductSchema, Product } from "@/api/products/types";
 import { ErrorProperties } from "@/actions/product-form/types";
 
@@ -32,6 +31,7 @@ async function createProduct(
 }
 
 function getErrors(error: ZodError<Product>): ErrorProperties {
+  console.info("Errors:", z.treeifyError(error).properties);
   return z.treeifyError(error).properties;
 }
 
@@ -44,7 +44,8 @@ export async function addProduct(
     return { message: "Invalid Product", error: getErrors(error) };
   }
   const product = data as Product;
-  product.images = await getProductImages(form.getAll("images") as File[]);
-  await createProduct(product);
-  return { message: "Product created successfully" };
+  console.info("Adding product", product);
+  // product.images = await getProductImages(form.getAll("images") as File[]);
+  // await createProduct(product);
+  // return { message: "Product created successfully" };
 }

@@ -1,14 +1,15 @@
-import { useMemo, useState } from "react";
 import { Input } from "@heroui/react";
+import { useFormContext } from "react-hook-form";
 
 import InputContainer from "@/components/product-form/input-container";
 import ErrorDisplay from "@/components/product-form/error-display";
 
 export default function ProductTitle() {
-  const [value, setValue] = useState<string>("");
-  let error: string = "";
-  const isValid = useMemo(() => value.length > 0 && value.length < 5, [value]);
-  if (isValid) error = "Title must be at least 5 characters long.";
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+  const error = errors.title?.message as string;
 
   return (
     <InputContainer>
@@ -16,15 +17,19 @@ export default function ProductTitle() {
         isClearable
         isRequired
         className="w-full"
-        errorMessage={() => <ErrorDisplay error={error} />}
+        errorMessage={() => <ErrorDisplay error={error || ""} />}
         id="product-title"
-        isInvalid={error.length > 0}
+        isInvalid={!!error}
         label="Product Title"
         type="text"
-        value={value}
         variant="underlined"
-        onChange={(e) => setValue(e.target.value)}
-        onClear={() => setValue("")}
+        {...register("title", {
+          required: "Title is required",
+          minLength: {
+            value: 5,
+            message: "Title must be at least 5 characters long.",
+          },
+        })}
       />
     </InputContainer>
   );

@@ -2,6 +2,7 @@
 
 import { Form } from "@heroui/form";
 import { useActionState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
 
 import { addProduct } from "@/actions/product-form/actions";
 import ProductFormHeader from "@/components/product-form/product-form-header";
@@ -19,22 +20,46 @@ export const initialFormState = {
   message: "",
 };
 
+type FormData = {
+  title: string;
+  description: string;
+  shortDescription?: string;
+  categories: string[];
+  images: File[];
+  price: number;
+  discount?: number;
+};
+
 export default function CreateProductForm({ categories }: CategoriesProps) {
-  const [_, formAction] = useActionState(addProduct, initialFormState);
+  const [state, formAction] = useActionState(addProduct, initialFormState);
+  const methods = useForm<FormData>({
+    mode: "onChange",
+    defaultValues: {
+      title: "",
+      description: "",
+      shortDescription: "",
+      categories: [],
+      images: [],
+      price: 0,
+      discount: 0,
+    },
+  });
 
   return (
-    <section className="w-full max-w-4xl mx-auto p-10 border-1  border-gray-900/10 rounded">
-      <ProductFormHeader header="Create Product" />
-      <Form action={formAction}>
-        <ProductTitle />
-        <ProductDescription />
-        <ProductShortDescription />
-        <ProductCategories categories={categories} />
-        <ProductImages />
-        <ProductPrice />
-        <ProductDiscount />
-        <ProductFormFooter />
-      </Form>
-    </section>
+    <FormProvider {...methods}>
+      <section className="w-full max-w-4xl mx-auto p-10 border-1  border-gray-900/10 rounded">
+        <ProductFormHeader header="Create Product" />
+        <Form action={formAction}>
+          <ProductTitle />
+          <ProductDescription />
+          <ProductShortDescription />
+          <ProductCategories categories={categories} />
+          <ProductImages />
+          <ProductPrice />
+          <ProductDiscount />
+          <ProductFormFooter />
+        </Form>
+      </section>
+    </FormProvider>
   );
 }

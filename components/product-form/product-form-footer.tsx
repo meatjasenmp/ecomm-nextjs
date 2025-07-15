@@ -1,9 +1,18 @@
+import { useFormContext } from "react-hook-form";
+
 import Button from "@/components/ui/button";
 
 export default function ProductFormFooter() {
+  const {
+    formState: { isValid },
+  } = useFormContext();
+  console.info("Form is valid:", isValid);
+
   return (
     <footer className="mt-6 w-full">
-      <Button type="submit">Save</Button>
+      <Button disabled={!isValid} type="submit">
+        Save
+      </Button>
     </footer>
   );
 }
