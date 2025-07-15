@@ -6,41 +6,63 @@ import { ImageValidationError, validateImage } from "./helpers";
 
 import ErrorDisplay from "@/components/product-form/error-display";
 
-export default function ProductImage() {
-  const [imageUrl, setImageUrl] = useState<string>("");
+type ProductImageProps = {
+  index: number;
+  images: File[];
+  onImagesChange: (images: File[]) => void;
+};
+
+export default function ProductImage({
+  index,
+  images,
+  onImagesChange,
+}: ProductImageProps) {
   const [error, setError] = useState<ImageValidationError | null>(null);
+  const currentImage = images[index];
+
+  const getImageUrl = () => {
+    if (currentImage instanceof File) return URL.createObjectURL(currentImage);
+    return "";
+  };
 
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const selectedFile = event.target.files?.[0];
     if (!selectedFile) return;
+
     setError(null);
-    const error = await validateImage(selectedFile);
-    if (!error) return setImageUrl(URL.createObjectURL(selectedFile));
-    setError(error);
-    setImageUrl("");
+    const validationError = await validateImage(selectedFile);
+    if (!validationError) {
+      const newImages = [...images];
+      newImages[index] = selectedFile;
+      onImagesChange(newImages.filter(Boolean));
+    } else setError(validationError);
   };
 
   const handleRemove = () => {
-    setImageUrl("");
+    const newImages = [...images];
+    newImages.splice(index, 1);
+    onImagesChange(newImages);
     setError(null);
   };
+
+  const imageUrl = getImageUrl();
+  const borderColor = error ? "border-red-500" : "border-gray-900/25";
 
   return (
     <div className="w-1/3">
       <div
-        className={`mt-2 flex relative justify-center rounded-lg border border-dashed ${error ? "border-red-500" : "border-gray-900/25"} px-6  py-10`}
+        className={`mt-2 flex relative justify-center rounded-lg border border-dashed ${borderColor} px-6 py-10`}
       >
         {imageUrl.length > 0 && (
           <ProductImagePreview src={imageUrl} onRemove={handleRemove} />
         )}
         {imageUrl.length === 0 && (
           <Input
-            isRequired
             accept="image/png, image/jpeg, image/gif"
-            id="product-image"
-            name="product-image"
+            id={`image-${index}`}
+            name={`image-${index}`}
             type="file"
             onChange={handleImageChange}
           />
