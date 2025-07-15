@@ -1,17 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+) {
   try {
-    const formData = await request.formData();
+    const { id } = params;
     const apiUrl = process.env.API_URL || "http://localhost:8080";
-    const response = await fetch(`${apiUrl}/upload-images`, {
-      method: "POST",
-      body: formData,
-    });
+
+    const response = await fetch(`${apiUrl}/product/${id}`);
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: "Failed to upload images" },
+        { error: "Failed to fetch product" },
         { status: response.status },
       );
     }
@@ -19,8 +20,9 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
+    console.error("Product fetch error:", error);
     return NextResponse.json(
-      { error: `Internal server error: ${error}` },
+      { error: "Internal server error" },
       { status: 500 },
     );
   }

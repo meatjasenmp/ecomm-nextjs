@@ -5,29 +5,52 @@ const headers = {
 };
 
 export async function fetchProducts() {
-  const response = await fetch(process.env.NEXT_PUBLIC_API_URL!, {
+  const baseUrl =
+    typeof window === "undefined"
+      ? process.env.API_URL || "http://localhost:8080"
+      : "";
+
+  const url =
+    typeof window === "undefined" ? `${baseUrl}/products` : "/api/products";
+
+  const response = await fetch(url, {
     cache: "no-store",
   });
   return (await response.json()) as Product[];
 }
 
 export async function createProductRequest(body: Product) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/create-product`,
-    {
-      method: "POST",
-      headers,
-      body: JSON.stringify(body),
-    },
-  );
+  const baseUrl =
+    typeof window === "undefined"
+      ? process.env.API_URL || "http://localhost:8080"
+      : "";
+
+  const url =
+    typeof window === "undefined"
+      ? `${baseUrl}/create-product`
+      : "/api/products";
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+  });
   return (await response.json()) as Product;
 }
 
 export async function getProductRequest(id: string) {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/product/${id}`,
-    );
+    const baseUrl =
+      typeof window === "undefined"
+        ? process.env.API_URL || "http://localhost:8080"
+        : "";
+
+    const url =
+      typeof window === "undefined"
+        ? `${baseUrl}/product/${id}`
+        : `/api/products/${id}`;
+
+    const response = await fetch(url);
     return (await response.json()) as Product;
   } catch (error) {
     return error;
