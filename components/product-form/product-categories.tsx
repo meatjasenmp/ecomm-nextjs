@@ -51,7 +51,7 @@ export default function ProductCategories({ categories }: CategoriesProps) {
           );
         }}
         rules={{
-          required: "At least one category is required",
+          required: "At least one category is required!",
           validate: (value) => {
             return value || value.length !== 0;
           },
