@@ -1,20 +1,10 @@
 import { NextResponse } from "next/server";
 
+import { getExternalApiUrl, apiRequest } from "@/lib/api-utils";
+
 export async function GET() {
   try {
-    const apiUrl = process.env.API_URL || "http://localhost:8080";
-    const response = await fetch(`${apiUrl}/categories`, {
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: "Failed to fetch categories" },
-        { status: response.status },
-      );
-    }
-
-    const data = await response.json();
+    const data = await apiRequest(getExternalApiUrl("/categories"));
     return NextResponse.json(data);
   } catch (error) {
     console.error("Categories fetch error:", error);
