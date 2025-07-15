@@ -3,22 +3,22 @@
 import { z } from "zod/v4";
 
 import { Category } from "@/api/categories/types";
-import { ProductCreateSchema, ProductCreate } from "@/api/products/types";
+import { ProductSchema, Product } from "@/api/products/types";
 import { createProductRequest } from "@/api/products/requests";
+import { Image } from "@/api/images/types";
 
 export async function submitProductForm(formData: {
   title: string;
   description: string;
   shortDescription: string;
   categories: Category[];
-  images: File[];
+  images: File[] | Image[];
   price: number;
   discount?: number;
 }) {
-  console.info("Form Data:", formData);
   try {
-    const validatedData = ProductCreateSchema.parse(formData);
-    const product: ProductCreate = {
+    const validatedData = ProductSchema.parse(formData);
+    const product: Product = {
       title: validatedData.title,
       description: validatedData.description,
       shortDescription: validatedData.shortDescription,
