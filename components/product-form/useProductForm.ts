@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 
 import { ProductFormData } from "@/components/product-form/types";
+import { uploadImagesRequest } from "@/api/images/requests";
 import { submitProductForm } from "@/actions/product-form/actions";
 
 export function useProductForm() {
@@ -18,7 +19,10 @@ export function useProductForm() {
   });
 
   const onSubmit = async (data: ProductFormData) => {
-    const result = await submitProductForm(data);
+    const result = await submitProductForm({
+      ...data,
+      images: await uploadImagesRequest(data.images),
+    });
     if (!result.success) {
       if ("errors" in result && result.errors) {
         result.errors.forEach((error) => {
