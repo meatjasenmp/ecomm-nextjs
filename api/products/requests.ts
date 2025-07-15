@@ -1,4 +1,4 @@
-import { Product } from "./types";
+import { ProductCreate, Product } from "./types";
 
 const headers = {
   "Content-Type": "application/json",
@@ -11,7 +11,7 @@ export async function fetchProducts() {
   return (await response.json()) as Product[];
 }
 
-export async function createProductRequest(body: Product) {
+export async function createProductRequest(body: ProductCreate) {
   const response = await fetch(`${process.env.API_URL}/create-product`, {
     method: "POST",
     headers,
