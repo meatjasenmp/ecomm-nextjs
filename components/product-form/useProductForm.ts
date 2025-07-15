@@ -18,22 +18,25 @@ export function useProductForm() {
     },
   });
 
+  const handleFormErrors = (result: any) => {
+    if (!result.success && "errors" in result && result.errors) {
+      result.errors.forEach((error: { path: string[]; message: string }) => {
+        const fieldName = error.path[0] as keyof ProductFormData;
+        methods.setError(fieldName, {
+          type: "server",
+          message: error.message,
+        });
+      });
+    }
+  };
+
   const onSubmit = async (data: ProductFormData) => {
     const result = await submitProductForm({
       ...data,
       images: await uploadImagesRequest(data.images),
     });
-    if (!result.success) {
-      if ("errors" in result && result.errors) {
-        result.errors.forEach((error) => {
-          const fieldName = error.path[0] as keyof ProductFormData;
-          methods.setError(fieldName, {
-            type: "server",
-            message: error.message,
-          });
-        });
-      }
-    }
+
+    handleFormErrors(result);
   };
 
   return {
