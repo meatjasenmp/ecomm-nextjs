@@ -3,27 +3,31 @@ import { Product } from "./types";
 const headers = {
   "Content-Type": "application/json",
 };
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function fetchProducts() {
-  const response = await fetch(API_URL!, {
+  const response = await fetch(process.env.NEXT_PUBLIC_API_URL!, {
     cache: "no-store",
   });
   return (await response.json()) as Product[];
 }
 
 export async function createProductRequest(body: Product) {
-  const response = await fetch(`${API_URL}/create-product`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/create-product`,
+    {
+      method: "POST",
+      headers,
+      body: JSON.stringify(body),
+    },
+  );
   return (await response.json()) as Product;
 }
 
 export async function getProductRequest(id: string) {
   try {
-    const response = await fetch(`${API_URL}/product/${id}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/product/${id}`,
+    );
     return (await response.json()) as Product;
   } catch (error) {
     return error;
