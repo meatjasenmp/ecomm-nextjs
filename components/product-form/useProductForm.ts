@@ -4,27 +4,21 @@ import { useState } from "react";
 import {
   ProductFormData,
   SubmissionState,
+  UseProductFormOptions,
 } from "@/components/product-form/types";
 import { submitProductForm } from "@/app/actions/product-form/actions";
 import { apiRequest, getInternalApiUrl } from "@/lib/api-utils";
 import { Image } from "@/app/api/images/types";
+import { getDefaultValues } from "@/components/product-form/form-utils";
 
-export function useProductForm() {
+export function useProductForm({ mode, initialData }: UseProductFormOptions) {
   const [submissionState, setSubmissionState] =
     useState<SubmissionState>("idle");
   const [submissionMessage, setSubmissionMessage] = useState<string>("");
 
   const methods = useForm<ProductFormData>({
     mode: "onChange",
-    defaultValues: {
-      title: "",
-      description: "",
-      shortDescription: "",
-      categories: [],
-      images: [],
-      price: 0,
-      discount: 0,
-    },
+    defaultValues: getDefaultValues(mode, initialData),
   });
 
   const handleImages = async (images: File[]): Promise<Image[]> => {

@@ -1,14 +1,16 @@
 import { useFormContext } from "react-hook-form";
 
 import Button from "@/components/ui/button";
-import { SubmissionState } from "@/components/product-form/types";
+import { SubmissionState, FormMode } from "@/components/product-form/types";
 
-interface ProductFormFooterProps {
+type ProductFormFooterProps = {
   submissionState?: SubmissionState;
-}
+  mode?: FormMode;
+};
 
 export default function ProductFormFooter({
   submissionState = "idle",
+  mode = "create",
 }: ProductFormFooterProps) {
   const {
     formState: { isValid },
@@ -17,10 +19,17 @@ export default function ProductFormFooter({
   const isSubmitting = submissionState === "submitting";
   const isDisabled = !isValid || isSubmitting;
 
+  const getButtonText = () => {
+    if (isSubmitting) {
+      return mode === "create" ? "Creating..." : "Updating...";
+    }
+    return mode === "create" ? "Create Product" : "Update Product";
+  };
+
   return (
     <footer className="mt-6 w-full">
       <Button disabled={isDisabled} type="submit">
-        {isSubmitting ? "Saving..." : "Save"}
+        {getButtonText()}
       </Button>
     </footer>
   );

@@ -17,7 +17,7 @@ import { CategoriesProps } from "@/app/admin/products/create/page";
 
 export default function CreateProductForm({ categories }: CategoriesProps) {
   const { methods, onSubmit, submissionState, submissionMessage } =
-    useProductForm();
+    useProductForm({ mode: "create" });
 
   return (
     <FormProvider {...methods}>
@@ -35,7 +35,7 @@ export default function CreateProductForm({ categories }: CategoriesProps) {
           <ProductImages />
           <ProductPrice />
           <ProductDiscount />
-          <ProductFormFooter submissionState={submissionState} />
+          <ProductFormFooter mode="create" submissionState={submissionState} />
         </form>
       </section>
     </FormProvider>

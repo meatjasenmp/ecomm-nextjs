@@ -1,9 +1,9 @@
 import { SubmissionState } from "@/components/product-form/types";
 
-interface FormSubmissionStatusProps {
+type FormSubmissionStatusProps = {
   submissionState: SubmissionState;
   submissionMessage: string;
-}
+};
 
 export default function FormSubmissionStatus({
   submissionState,
