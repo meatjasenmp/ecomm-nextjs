@@ -9,3 +9,5 @@ export type ProductFormData = {
   price: number;
   discount?: number;
 };
+
+export type SubmissionState = "idle" | "submitting" | "success" | "error";

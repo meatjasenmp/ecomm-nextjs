@@ -12,15 +12,21 @@ import ProductImages from "@/components/product-form/product-images";
 import ProductPrice from "@/components/product-form/product-price";
 import ProductDiscount from "@/components/product-form/product-discount";
 import ProductFormFooter from "@/components/product-form/product-form-footer";
+import FormSubmissionStatus from "@/components/product-form/form-submission-status";
 import { CategoriesProps } from "@/app/admin/products/create/page";
 
 export default function CreateProductForm({ categories }: CategoriesProps) {
-  const { methods, onSubmit } = useProductForm();
+  const { methods, onSubmit, submissionState, submissionMessage } =
+    useProductForm();
 
   return (
     <FormProvider {...methods}>
       <section className="w-full max-w-4xl mx-auto p-10 border-1  border-gray-900/10 rounded">
         <ProductFormHeader header="Create Product" />
+        <FormSubmissionStatus
+          submissionMessage={submissionMessage}
+          submissionState={submissionState}
+        />
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <ProductTitle />
           <ProductDescription />
@@ -29,7 +35,7 @@ export default function CreateProductForm({ categories }: CategoriesProps) {
           <ProductImages />
           <ProductPrice />
           <ProductDiscount />
-          <ProductFormFooter />
+          <ProductFormFooter submissionState={submissionState} />
         </form>
       </section>
     </FormProvider>
