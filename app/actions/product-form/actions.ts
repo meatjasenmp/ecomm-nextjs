@@ -3,9 +3,9 @@
 import { z } from "zod/v4";
 
 import { Category } from "@/app/api/categories/types";
-import { ProductSchema, Product } from "@/app/api/products/types";
 import { Image } from "@/app/api/images/types";
 import { getInternalApiUrl, apiRequest } from "@/lib/api-utils";
+import { getCategoryIds, getImageIds } from "@/app/actions/product-form/utils";
 
 export async function submitProductForm(formData: {
   title: string;
@@ -17,18 +17,18 @@ export async function submitProductForm(formData: {
   discount?: number;
 }) {
   try {
-    const validatedData = ProductSchema.parse(formData);
-    const product: Product = {
-      title: validatedData.title,
-      description: validatedData.description,
-      shortDescription: validatedData.shortDescription,
-      categories: validatedData.categories,
-      images: validatedData.images,
-      price: validatedData.price,
-      discount: validatedData.discount || 0,
+    const productPayload = {
+      title: formData.title,
+      description: formData.description,
+      shortDescription: formData.shortDescription,
+      categories: getCategoryIds(formData.categories),
+      images: getImageIds(formData.images as Image[]),
+      price: formData.price,
+      discount: formData.discount || 0,
       isPublished: true,
     };
-    await apiRequest(getInternalApiUrl("/products"), "POST", product);
+
+    await apiRequest(getInternalApiUrl("/products"), "POST", productPayload);
     return { success: true, message: "Product created successfully" };
   } catch (error) {
     if (error instanceof z.ZodError) {
