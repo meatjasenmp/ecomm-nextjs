@@ -10,7 +10,7 @@ export function getExternalApiUrl(path: string) {
 
 export async function apiRequest(
   url: string,
-  method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" = "GET",
   body?: any,
 ) {
   const options: RequestInit = {
