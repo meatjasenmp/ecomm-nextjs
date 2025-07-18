@@ -4,7 +4,6 @@ export const ImageSchema = z.object({
   name: z.string(),
   key: z.string(),
   url: z.string(),
-  isPrimary: z.boolean(),
   _id: z.string(),
   createdAt: z.string(),
 });
