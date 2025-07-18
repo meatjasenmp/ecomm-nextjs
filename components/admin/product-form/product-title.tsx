@@ -1,8 +1,8 @@
 import { Input } from "@heroui/react";
 import { useFormContext } from "react-hook-form";
 
-import InputContainer from "@/components/product-form/input-container";
-import ErrorDisplay from "@/components/product-form/error-display";
+import InputContainer from "@/components/admin/product-form/input-container";
+import ErrorDisplay from "@/components/admin/product-form/error-display";
 
 export default function ProductTitle() {
   const {

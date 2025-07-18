@@ -1,9 +1,9 @@
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 
-import ProductImage from "@/components/product-form/product-images/product-image";
-import InputContainer from "@/components/product-form/input-container";
-import ErrorDisplay from "@/components/product-form/error-display";
+import ProductImage from "@/components/admin/product-form/product-images/product-image";
+import InputContainer from "@/components/admin/product-form/input-container";
+import ErrorDisplay from "@/components/admin/product-form/error-display";
 
 export default function ProductImages() {
   const {

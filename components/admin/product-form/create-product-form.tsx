@@ -2,17 +2,17 @@
 
 import { FormProvider } from "react-hook-form";
 
-import { useProductForm } from "@/components/product-form/useProductForm";
-import ProductFormHeader from "@/components/product-form/product-form-header";
-import ProductTitle from "@/components/product-form/product-title";
-import ProductDescription from "@/components/product-form/product-description";
-import ProductShortDescription from "@/components/product-form/product-short-description";
-import ProductCategories from "@/components/product-form/product-categories";
-import ProductImages from "@/components/product-form/product-images";
-import ProductPrice from "@/components/product-form/product-price";
-import ProductDiscount from "@/components/product-form/product-discount";
-import ProductFormFooter from "@/components/product-form/product-form-footer";
-import FormSubmissionStatus from "@/components/product-form/form-submission-status";
+import { useProductForm } from "@/components/admin/product-form/useProductForm";
+import ProductFormHeader from "@/components/admin/product-form/product-form-header";
+import ProductTitle from "@/components/admin/product-form/product-title";
+import ProductDescription from "@/components/admin/product-form/product-description";
+import ProductShortDescription from "@/components/admin/product-form/product-short-description";
+import ProductCategories from "@/components/admin/product-form/product-categories";
+import ProductImages from "@/components/admin/product-form/product-images";
+import ProductPrice from "@/components/admin/product-form/product-price";
+import ProductDiscount from "@/components/admin/product-form/product-discount";
+import ProductFormFooter from "@/components/admin/product-form/product-form-footer";
+import FormSubmissionStatus from "@/components/admin/product-form/form-submission-status";
 import { CategoriesProps } from "@/app/admin/products/create/page";
 
 export default function CreateProductForm({ categories }: CategoriesProps) {

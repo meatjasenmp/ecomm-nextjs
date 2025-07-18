@@ -3,9 +3,9 @@
 import { Selection, Select, SelectItem } from "@heroui/react";
 import { useFormContext, Controller } from "react-hook-form";
 
-import InputContainer from "@/components/product-form/input-container";
+import InputContainer from "@/components/admin/product-form/input-container";
 import { CategoriesProps } from "@/app/admin/products/create/page";
-import ErrorDisplay from "@/components/product-form/error-display";
+import ErrorDisplay from "@/components/admin/product-form/error-display";
 import { Category } from "@/app/api/categories/types";
 
 export default function ProductCategories({ categories }: CategoriesProps) {

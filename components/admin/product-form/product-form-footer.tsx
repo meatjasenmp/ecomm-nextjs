@@ -1,7 +1,10 @@
 import { useFormContext } from "react-hook-form";
 
 import Button from "@/components/ui/button";
-import { SubmissionState, FormMode } from "@/components/product-form/types";
+import {
+  SubmissionState,
+  FormMode,
+} from "@/components/admin/product-form/types";
 
 type ProductFormFooterProps = {
   submissionState?: SubmissionState;

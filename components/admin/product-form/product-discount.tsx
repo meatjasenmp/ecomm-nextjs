@@ -1,37 +1,35 @@
 import { Input } from "@heroui/react";
 import { useFormContext } from "react-hook-form";
 
-import InputContainer from "@/components/product-form/input-container";
-import ErrorDisplay from "@/components/product-form/error-display";
+import InputContainer from "@/components/admin/product-form/input-container";
+import ErrorDisplay from "@/components/admin/product-form/error-display";
 
-export default function ProductPrice() {
+export default function ProductDiscount() {
   const {
     register,
     formState: { errors },
   } = useFormContext();
-  const error = errors.price?.message as string;
+  const error = errors.discount?.message as string;
 
   return (
     <InputContainer>
       <Input
-        isRequired
         className="w-full"
         errorMessage={() => <ErrorDisplay error={error || ""} />}
-        id="product-price"
+        id="product-discount"
         isInvalid={!!error}
-        label="Product Price"
+        label="Product Discount"
         type="number"
         variant="underlined"
-        {...register("price", {
-          required: "Price is required",
+        {...register("discount", {
           valueAsNumber: true,
           min: {
-            value: 1,
-            message: "Price must be greater than 0.",
+            value: 0,
+            message: "Discount must be greater than 0.",
           },
           validate: (value) => {
-            if (!Number.isInteger(value)) {
-              return "Price must be a whole number.";
+            if (value !== undefined && !Number.isInteger(value)) {
+              return "Discount must be a whole number.";
             }
             return true;
           },

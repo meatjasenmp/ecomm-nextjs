@@ -5,11 +5,14 @@ import {
   ProductFormData,
   SubmissionState,
   UseProductFormOptions,
-} from "@/components/product-form/types";
-import { submitProductForm } from "@/app/actions/product-form/actions";
+} from "@/components/admin/product-form/types";
+import {
+  createProductForm,
+  updateProductForm,
+} from "@/app/actions/product-form/actions";
 import { apiRequest, getInternalApiUrl } from "@/lib/api-utils";
 import { Image } from "@/app/api/images/types";
-import { getDefaultValues } from "@/components/product-form/form-utils";
+import { getDefaultValues } from "@/components/admin/product-form/form-utils";
 
 export function useProductForm({ mode, initialData }: UseProductFormOptions) {
   const [submissionState, setSubmissionState] =
@@ -35,15 +38,27 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     setSubmissionState("submitting");
     setSubmissionMessage("");
 
-    const result = await submitProductForm({
+    const hasNewImages = data.images.some((img) => img instanceof File);
+    const processedImages = hasNewImages
+      ? await handleImages(data.images as File[])
+      : data.images;
+
+    const formDataWithImages = {
       ...data,
-      images: await handleImages(data.images as File[]),
-    });
+      images: processedImages,
+    };
+
+    const result =
+      mode === "edit" && initialData?._id
+        ? await updateProductForm(initialData._id, formDataWithImages)
+        : await createProductForm(formDataWithImages);
 
     if (result.success) {
       setSubmissionState("success");
       setSubmissionMessage(result.message);
-      methods.reset();
+      if (mode === "create") {
+        methods.reset();
+      }
     } else {
       setSubmissionState("error");
       setSubmissionMessage(result.message);

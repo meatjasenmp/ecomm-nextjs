@@ -1,4 +1,4 @@
-import { SubmissionState } from "@/components/product-form/types";
+import { SubmissionState } from "@/components/admin/product-form/types";
 
 type FormSubmissionStatusProps = {
   submissionState: SubmissionState;

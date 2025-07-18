@@ -1,4 +1,7 @@
-import { ProductFormData, FormMode } from "@/components/product-form/types";
+import {
+  ProductFormData,
+  FormMode,
+} from "@/components/admin/product-form/types";
 import { Product } from "@/app/api/products/types";
 
 export function getDefaultValues(

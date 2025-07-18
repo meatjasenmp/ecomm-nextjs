@@ -1,4 +1,4 @@
-import CreateProductForm from "@/components/product-form/create-product-form";
+import CreateProductForm from "@/components/admin/product-form/create-product-form";
 import { Category } from "@/app/api/categories/types";
 import { getInternalApiUrl, apiRequest } from "@/lib/api-utils";
 

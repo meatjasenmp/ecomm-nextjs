@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import ProductImagePreview from "./product-image-preview";
 import { ImageValidationError, validateImage } from "./helpers";
 
-import ErrorDisplay from "@/components/product-form/error-display";
+import ErrorDisplay from "@/components/admin/product-form/error-display";
+import { Image } from "@/app/api/images/types";
 
 type ProductImageProps = {
   index: number;
-  images: File[];
-  onImagesChange: (images: File[]) => void;
+  images: (File | Image)[];
+  onImagesChange: (images: (File | Image)[]) => void;
 };
 
 export default function ProductImage({
@@ -22,6 +23,7 @@ export default function ProductImage({
 
   const getImageUrl = () => {
     if (currentImage instanceof File) return URL.createObjectURL(currentImage);
+    if (currentImage && "url" in currentImage) return currentImage.url;
     return "";
   };
 
