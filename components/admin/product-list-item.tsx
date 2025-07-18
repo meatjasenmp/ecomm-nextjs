@@ -15,7 +15,7 @@ export default function ProductListItem({ product }: ProductListItemProps) {
     <div className="group relative border rounded-lg p-4 bg-white shadow-sm">
       <Image
         alt={product.title}
-        className="w-full h-48 object-cover rounded-md mb-4"
+        className="rounded-md mb-4"
         height={300}
         src={(product.images[0] as ImageType).url}
         width={300}

@@ -42,6 +42,7 @@ export default function Image({
       radius={radius}
       shadow={shadow}
       src={src}
+      style={{ height: "auto", objectFit: "cover" }}
       width={width}
     />
   );

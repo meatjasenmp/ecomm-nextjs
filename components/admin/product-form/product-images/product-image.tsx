@@ -55,7 +55,7 @@ export default function ProductImage({
   return (
     <div className="w-1/3">
       <div
-        className={`mt-2 flex relative justify-center rounded-lg border border-dashed ${borderColor} px-6 py-10`}
+        className={`mt-2 h-full relative p-4 rounded-lg border border-dashed ${borderColor}`}
       >
         {imageUrl.length > 0 && (
           <ProductImagePreview src={imageUrl} onRemove={handleRemove} />
