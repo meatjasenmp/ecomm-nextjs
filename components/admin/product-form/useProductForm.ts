@@ -24,69 +24,63 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     defaultValues: getDefaultValues(mode, initialData),
   });
 
-  const handleSubmissionError = (error: unknown) => {
+  const setError = (message: string) => {
     setSubmissionState("error");
-    setSubmissionMessage(
+    setSubmissionMessage(message);
+  };
+
+  const handleImageUploadError = (error: unknown) => {
+    setError(
       error instanceof Error
         ? error.message
-        : "An unexpected error occurred. Please try again.",
+        : "Failed to upload images. Please try again.",
     );
   };
 
-  const handleSubmissionSuccess = (message: string, shouldReset: boolean) => {
+  const setSuccess = (message: string, shouldReset: boolean) => {
     setSubmissionState("success");
     setSubmissionMessage(message);
     if (shouldReset) methods.reset();
   };
 
+  const handleActionResult = (result: any, shouldReset: boolean) => {
+    if (result.success) return setSuccess(result.message, shouldReset);
+    setError(result.message);
+  };
+
+  const processFormData = async (data: ProductFormData) => {
+    return {
+      ...data,
+      images: await processImages(data.images),
+    };
+  };
+
   const createProduct = async (data: ProductFormData) => {
     try {
-      const formData = {
-        ...data,
-        images: await processImages(data.images),
-      };
-
+      const formData = await processFormData(data);
       const result = await createProductForm(formData);
-      if (result.success) {
-        handleSubmissionSuccess(result.message, true);
-      } else {
-        setSubmissionState("error");
-        setSubmissionMessage(result.message);
-      }
+      handleActionResult(result, true);
     } catch (error) {
-      handleSubmissionError(error); // Only catches image upload errors from processImages
+      handleImageUploadError(error);
     }
   };
 
   const updateProduct = async (data: ProductFormData) => {
-    if (!initialData?._id) {
-      setSubmissionState("error");
-      setSubmissionMessage("Product ID is required for update");
-      return;
-    }
+    if (!initialData?._id) return setError("Product ID is required for update");
 
     try {
-      const formData = {
-        ...data,
-        images: await processImages(data.images),
-      };
-
-      const result = await updateProductForm(initialData._id, formData);
-      if (result.success) {
-        handleSubmissionSuccess(result.message, false);
-      } else {
-        setSubmissionState("error");
-        setSubmissionMessage(result.message);
-      }
+      const formData = await processFormData(data);
+      const result = await updateProductForm(initialData!._id!, formData);
+      handleActionResult(result, false);
     } catch (error) {
-      handleSubmissionError(error); // Only catches image upload errors from processImages
+      handleImageUploadError(error);
     }
   };
 
   const onSubmit = async (data: ProductFormData) => {
     setSubmissionState("submitting");
     setSubmissionMessage("");
-    if (mode === "edit") return await updateProduct(data);
+    if (mode === "edit") return updateProduct(data);
     await createProduct(data);
   };
 
