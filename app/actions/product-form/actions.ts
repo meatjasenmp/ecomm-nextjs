@@ -7,6 +7,9 @@ import { Image } from "@/app/api/images/types";
 import { getInternalApiUrl, apiRequest } from "@/lib/api-utils";
 import { getCategoryIds, getImageIds } from "@/app/actions/product-form/utils";
 
+const CREATE_ERROR_MESSAGE = "Error creating product";
+const UPDATE_ERROR_MESSAGE = "Error updating product";
+
 export async function createProductForm(formData: {
   title: string;
   description: string;
@@ -32,13 +35,13 @@ export async function createProductForm(formData: {
     return { success: true, message: "Product created successfully" };
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error("Product validation error:", error.issues);
       return {
         success: false,
-        message: "Validation error",
-        errors: error.issues,
+        message: CREATE_ERROR_MESSAGE,
       };
     }
-    return { success: false, message: `Error creating product: ${error}` };
+    return { success: false, message: `${CREATE_ERROR_MESSAGE}: ${error}` };
   }
 }
 
@@ -74,12 +77,12 @@ export async function updateProductForm(
     return { success: true, message: "Product updated successfully" };
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error("Product validation error:", error.issues);
       return {
         success: false,
-        message: "Validation error",
-        errors: error.issues,
+        message: UPDATE_ERROR_MESSAGE,
       };
     }
-    return { success: false, message: `Error updating product: ${error}` };
+    return { success: false, message: `${UPDATE_ERROR_MESSAGE}: ${error}` };
   }
 }
