@@ -1,8 +1,8 @@
 import { Input } from "@heroui/react";
-import React, { useState } from "react";
+import React from "react";
 
 import ProductImagePreview from "./product-image-preview";
-import { ImageValidationError, validateImage } from "./helpers";
+import { useProductImage } from "./use-product-image";
 
 import ErrorDisplay from "@/components/admin/product-form/error-display";
 import { Image } from "@/app/api/images/types";
@@ -18,39 +18,8 @@ export default function ProductImage({
   images,
   onImagesChange,
 }: ProductImageProps) {
-  const [error, setError] = useState<ImageValidationError | null>(null);
-  const currentImage = images[index];
-
-  const getImageUrl = () => {
-    if (currentImage instanceof File) return URL.createObjectURL(currentImage);
-    if (currentImage && "url" in currentImage) return currentImage.url;
-    return "";
-  };
-
-  const handleImageChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const selectedFile = event.target.files?.[0];
-    if (!selectedFile) return;
-
-    setError(null);
-    const validationError = await validateImage(selectedFile);
-    if (!validationError) {
-      const newImages = [...images];
-      newImages[index] = selectedFile;
-      onImagesChange(newImages.filter(Boolean));
-    } else setError(validationError);
-  };
-
-  const handleRemove = () => {
-    const newImages = [...images];
-    newImages.splice(index, 1);
-    onImagesChange(newImages);
-    setError(null);
-  };
-
-  const imageUrl = getImageUrl();
-  const borderColor = error ? "border-red-500" : "border-gray-900/25";
+  const { error, imageUrl, borderColor, handleImageChange, handleRemove } =
+    useProductImage({ index, images, onImagesChange });
 
   return (
     <div className="w-1/3">
