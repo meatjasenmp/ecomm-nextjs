@@ -2,7 +2,7 @@ import { Input } from "@heroui/react";
 import React from "react";
 
 import ProductImagePreview from "./product-image-preview";
-import { useProductImage } from "./use-product-image";
+import { useProductImage } from "./useProductImage";
 
 import ErrorDisplay from "@/components/admin/product-form/error-display";
 import { Image } from "@/app/api/images/types";
