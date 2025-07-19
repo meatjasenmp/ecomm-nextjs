@@ -23,7 +23,7 @@ export default function Image({
   height,
   className,
   radius = "md",
-  loading = "lazy",
+  loading = "eager",
   fallbackSrc,
   isBlurred = false,
   isZoomed = false,

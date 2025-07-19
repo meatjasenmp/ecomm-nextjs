@@ -18,13 +18,16 @@ export default function ProductImage({
   images,
   onImagesChange,
 }: ProductImageProps) {
-  const { error, imageUrl, borderColor, handleImageChange, handleRemove } =
-    useProductImage({ index, images, onImagesChange });
+  const { error, imageUrl, handleImageChange, handleRemove } = useProductImage({
+    index,
+    images,
+    onImagesChange,
+  });
 
   return (
     <div className="w-1/3">
       <div
-        className={`mt-2 h-full relative p-4 rounded-lg border border-dashed ${borderColor}`}
+        className={`mt-2 h-full relative p-4 rounded-lg border border-dashed ${error ? "border-red-500" : "border-gray-900/25"}`}
       >
         {imageUrl.length > 0 && (
           <ProductImagePreview src={imageUrl} onRemove={handleRemove} />
