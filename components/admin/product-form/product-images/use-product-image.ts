@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Image } from "@/app/api/images/types";
+
 import { ImageValidationError, validateImage } from "./helpers";
+
+import { Image } from "@/app/api/images/types";
 
 type UseProductImageProps = {
   index: number;
@@ -44,13 +46,9 @@ export function useProductImage({
     setError(null);
   };
 
-  const imageUrl = getImageUrl();
-  const borderColor = error ? "border-red-500" : "border-gray-900/25";
-
   return {
     error,
-    imageUrl,
-    borderColor,
+    imageUrl: getImageUrl(),
     handleImageChange,
     handleRemove,
   };
