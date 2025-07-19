@@ -24,30 +24,70 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     defaultValues: getDefaultValues(mode, initialData),
   });
 
+  const handleSubmissionError = (error: unknown) => {
+    setSubmissionState("error");
+    setSubmissionMessage(
+      error instanceof Error
+        ? error.message
+        : "An unexpected error occurred. Please try again.",
+    );
+  };
+
+  const handleSubmissionSuccess = (message: string, shouldReset: boolean) => {
+    setSubmissionState("success");
+    setSubmissionMessage(message);
+    if (shouldReset) methods.reset();
+  };
+
+  const createProduct = async (data: ProductFormData) => {
+    try {
+      const formData = {
+        ...data,
+        images: await processImages(data.images),
+      };
+
+      const result = await createProductForm(formData);
+      if (result.success) {
+        handleSubmissionSuccess(result.message, true);
+      } else {
+        setSubmissionState("error");
+        setSubmissionMessage(result.message);
+      }
+    } catch (error) {
+      handleSubmissionError(error); // Only catches image upload errors from processImages
+    }
+  };
+
+  const updateProduct = async (data: ProductFormData) => {
+    if (!initialData?._id) {
+      setSubmissionState("error");
+      setSubmissionMessage("Product ID is required for update");
+      return;
+    }
+
+    try {
+      const formData = {
+        ...data,
+        images: await processImages(data.images),
+      };
+
+      const result = await updateProductForm(initialData._id, formData);
+      if (result.success) {
+        handleSubmissionSuccess(result.message, false);
+      } else {
+        setSubmissionState("error");
+        setSubmissionMessage(result.message);
+      }
+    } catch (error) {
+      handleSubmissionError(error); // Only catches image upload errors from processImages
+    }
+  };
+
   const onSubmit = async (data: ProductFormData) => {
     setSubmissionState("submitting");
     setSubmissionMessage("");
-
-    const formDataWithImages = {
-      ...data,
-      images: await processImages(data.images),
-    };
-
-    const result =
-      mode === "edit" && initialData?._id
-        ? await updateProductForm(initialData._id, formDataWithImages)
-        : await createProductForm(formDataWithImages);
-
-    if (result.success) {
-      setSubmissionState("success");
-      setSubmissionMessage(result.message);
-      if (mode === "create") {
-        methods.reset();
-      }
-    } else {
-      setSubmissionState("error");
-      setSubmissionMessage(result.message);
-    }
+    if (mode === "edit") return await updateProduct(data);
+    await createProduct(data);
   };
 
   return {
