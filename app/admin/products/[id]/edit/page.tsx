@@ -12,10 +12,11 @@ type PageProps = {
 };
 
 export default async function Page({ params }: PageProps) {
+  const { id } = await params;
   try {
     const [product, categories] = await Promise.all([
       (await apiRequest(
-        getInternalApiUrl(`/products/${params.id}`),
+        getInternalApiUrl(`/products/${id}`),
       )) as Promise<Product>,
       (await apiRequest(getInternalApiUrl("/categories"))) as Promise<
         Category[]
