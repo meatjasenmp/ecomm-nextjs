@@ -24,23 +24,19 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     defaultValues: getDefaultValues(mode, initialData),
   });
 
+  const setSuccess = (message: string, shouldReset: boolean) => {
+    setSubmissionState("success");
+    setSubmissionMessage(message);
+    if (shouldReset) methods.reset();
+  };
+
   const setError = (message: string) => {
     setSubmissionState("error");
     setSubmissionMessage(message);
   };
 
-  const handleImageUploadError = (error: unknown) => {
-    setError(
-      error instanceof Error
-        ? error.message
-        : "Failed to upload images. Please try again.",
-    );
-  };
-
-  const setSuccess = (message: string, shouldReset: boolean) => {
-    setSubmissionState("success");
-    setSubmissionMessage(message);
-    if (shouldReset) methods.reset();
+  const handleImageUploadError = () => {
+    setError("Failed to upload images. Please try again.");
   };
 
   const handleActionResult = (result: any, shouldReset: boolean) => {
@@ -60,8 +56,8 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
       const formData = await processFormData(data);
       const result = await createProductForm(formData);
       handleActionResult(result, true);
-    } catch (error) {
-      handleImageUploadError(error);
+    } catch {
+      handleImageUploadError();
     }
   };
 
@@ -72,8 +68,8 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
       const formData = await processFormData(data);
       const result = await updateProductForm(initialData!._id!, formData);
       handleActionResult(result, false);
-    } catch (error) {
-      handleImageUploadError(error);
+    } catch {
+      handleImageUploadError();
     }
   };
 
