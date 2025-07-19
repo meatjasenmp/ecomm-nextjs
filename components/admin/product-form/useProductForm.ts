@@ -10,42 +10,27 @@ import {
   createProductForm,
   updateProductForm,
 } from "@/app/actions/product-form/actions";
-import { apiRequest, getInternalApiUrl } from "@/lib/api-utils";
-import { Image } from "@/app/api/images/types";
 import { getDefaultValues } from "@/components/admin/product-form/form-utils";
+import { useProductImages } from "@/components/admin/product-form/product-images/useProductImages";
 
 export function useProductForm({ mode, initialData }: UseProductFormOptions) {
   const [submissionState, setSubmissionState] =
     useState<SubmissionState>("idle");
   const [submissionMessage, setSubmissionMessage] = useState<string>("");
+  const { processImages } = useProductImages();
 
   const methods = useForm<ProductFormData>({
     mode: "onChange",
     defaultValues: getDefaultValues(mode, initialData),
   });
 
-  const handleImages = async (images: File[]): Promise<Image[]> => {
-    const formData = new FormData();
-    images.forEach((image) => formData.append("images", image));
-    return (await apiRequest(
-      getInternalApiUrl("/images"),
-      "POST",
-      formData,
-    )) as Promise<Image[]>;
-  };
-
   const onSubmit = async (data: ProductFormData) => {
     setSubmissionState("submitting");
     setSubmissionMessage("");
 
-    const hasNewImages = data.images.some((img) => img instanceof File);
-    const processedImages = hasNewImages
-      ? await handleImages(data.images as File[])
-      : data.images;
-
     const formDataWithImages = {
       ...data,
-      images: processedImages,
+      images: await processImages(data.images),
     };
 
     const result =
