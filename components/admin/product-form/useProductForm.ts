@@ -76,7 +76,7 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
   const onSubmit = async (data: ProductFormData) => {
     setSubmissionState("submitting");
     setSubmissionMessage("");
-    if (mode === "edit") return updateProduct(data);
+    if (mode === "edit") return await updateProduct(data);
     await createProduct(data);
   };
 
