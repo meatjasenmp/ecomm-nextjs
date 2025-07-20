@@ -52,25 +52,29 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
   };
 
   const createProduct = async (data: ProductFormData) => {
+    let formData;
     try {
-      const formData = await processFormData(data);
-      const result = await createProductForm(formData);
-      handleActionResult(result, true);
+      formData = await processFormData(data);
     } catch {
-      handleImageUploadError();
+      return handleImageUploadError();
     }
+
+    const result = await createProductForm(formData);
+    handleActionResult(result, true);
   };
 
   const updateProduct = async (data: ProductFormData) => {
     if (!initialData?._id) return setError("Product ID is required for update");
 
+    let formData;
     try {
-      const formData = await processFormData(data);
-      const result = await updateProductForm(initialData!._id!, formData);
-      handleActionResult(result);
+      formData = await processFormData(data);
     } catch {
-      handleImageUploadError();
+      return handleImageUploadError();
     }
+
+    const result = await updateProductForm(initialData!._id!, formData);
+    handleActionResult(result);
   };
 
   const onSubmit = async (data: ProductFormData) => {
