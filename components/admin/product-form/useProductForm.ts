@@ -39,7 +39,7 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     setError("Failed to upload images. Please try again.");
   };
 
-  const handleActionResult = (result: any, shouldReset: boolean) => {
+  const handleActionResult = (result: any, shouldReset: boolean = false) => {
     if (result.success) return setSuccess(result.message, shouldReset);
     setError(result.message);
   };
@@ -67,7 +67,7 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     try {
       const formData = await processFormData(data);
       const result = await updateProductForm(initialData!._id!, formData);
-      handleActionResult(result, false);
+      handleActionResult(result);
     } catch {
       handleImageUploadError();
     }
