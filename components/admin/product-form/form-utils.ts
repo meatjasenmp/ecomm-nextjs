@@ -1,8 +1,5 @@
-import {
-  ProductFormData,
-  FormMode,
-} from "@/components/admin/product-form/types";
-import { Product } from "@/app/api/products/types";
+import { FormMode } from "@/components/admin/product-form/types";
+import { Product, ProductFormData } from "@/app/api/products/types";
 
 export function getDefaultValues(
   mode: FormMode,
@@ -10,6 +7,7 @@ export function getDefaultValues(
 ): ProductFormData {
   if (mode === "edit" && initialData) {
     return {
+      _id: initialData._id,
       title: initialData.title,
       description: initialData.description,
       shortDescription: initialData.shortDescription,
@@ -17,6 +15,7 @@ export function getDefaultValues(
       images: initialData.images,
       price: initialData.price,
       discount: initialData.discount || 0,
+      isPublished: initialData.isPublished,
     };
   }
 
@@ -28,5 +27,6 @@ export function getDefaultValues(
     images: [],
     price: 0,
     discount: 0,
+    isPublished: true,
   };
 }

@@ -6,9 +6,9 @@ import { Product } from "@/app/api/products/types";
 import { getInternalApiUrl, apiRequest } from "@/lib/api-utils";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function Page({ params }: PageProps) {

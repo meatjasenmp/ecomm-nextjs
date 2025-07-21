@@ -3,8 +3,7 @@ import { z } from "zod/v4";
 import { CategorySchema } from "../categories/types";
 import { ImageSchema } from "../images/types";
 
-export const ProductSchema = z.object({
-  _id: z.string().optional(),
+const BaseProductSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters long"),
   description: z
     .string()
@@ -16,12 +15,23 @@ export const ProductSchema = z.object({
   categories: z
     .array(CategorySchema)
     .min(1, "At least one category is required"),
-  images: z
-    .union([z.array(z.instanceof(File)), z.array(ImageSchema)])
-    .default([]),
   price: z.number().min(1, "Price must be greater than 0"),
   discount: z.number().min(0, "Discount cannot be negative").optional(),
+});
+
+export const ProductSchema = BaseProductSchema.extend({
+  _id: z.string(),
+  images: z.array(ImageSchema).default([]),
   isPublished: z.boolean().default(true),
 });
 
+export const ProductFormSchema = BaseProductSchema.extend({
+  _id: z.string().optional(),
+  images: z
+    .union([z.array(z.instanceof(File)), z.array(ImageSchema)])
+    .optional(),
+  isPublished: z.boolean(),
+});
+
 export type Product = z.infer<typeof ProductSchema>;
+export type ProductFormData = z.infer<typeof ProductFormSchema>;

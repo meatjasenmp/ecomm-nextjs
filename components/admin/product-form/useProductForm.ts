@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
-  ProductFormData,
   SubmissionState,
   UseProductFormOptions,
 } from "@/components/admin/product-form/types";
@@ -12,6 +12,7 @@ import {
 } from "@/app/actions/product-form/actions";
 import { getDefaultValues } from "@/components/admin/product-form/form-utils";
 import { useProductImages } from "@/components/admin/product-form/product-images/useProductImages";
+import { ProductFormSchema, ProductFormData } from "@/app/api/products/types";
 
 export function useProductForm({ mode, initialData }: UseProductFormOptions) {
   const [submissionState, setSubmissionState] =
@@ -21,6 +22,7 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
 
   const methods = useForm<ProductFormData>({
     mode: "onChange",
+    resolver: zodResolver(ProductFormSchema),
     defaultValues: getDefaultValues(mode, initialData),
   });
 
@@ -47,7 +49,7 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
   const processFormData = async (data: ProductFormData) => {
     return {
       ...data,
-      images: await processImages(data.images),
+      images: await processImages(data.images || []),
     };
   };
 
