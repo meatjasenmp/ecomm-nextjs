@@ -31,8 +31,16 @@ export async function createProductForm(formData: {
       isPublished: true,
     };
 
-    await apiRequest(getInternalApiUrl("/products"), "POST", productPayload);
-    return { success: true, message: "Product created successfully" };
+    const createdProduct = await apiRequest(
+      getInternalApiUrl("/products"),
+      "POST",
+      productPayload,
+    );
+    return {
+      success: true,
+      message: "Product created successfully",
+      data: createdProduct,
+    };
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Product validation error:", error.issues);

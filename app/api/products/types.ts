@@ -11,7 +11,7 @@ const BaseProductSchema = z.object({
   shortDescription: z
     .string()
     .min(10, "Short description must be at least 10 characters")
-    .max(25, "Short description must be 25 characters or less"),
+    .max(300, "Short description must be 25 characters or less"),
   categories: z
     .array(CategorySchema)
     .min(1, "At least one category is required"),

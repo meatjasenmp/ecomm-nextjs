@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 import {
   SubmissionState,
@@ -19,6 +20,7 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     useState<SubmissionState>("idle");
   const [submissionMessage, setSubmissionMessage] = useState<string>("");
   const { processImages } = useProductImages();
+  const router = useRouter();
 
   const methods = useForm<ProductFormData>({
     mode: "onChange",
@@ -62,7 +64,12 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     }
 
     const result = await createProductForm(formData);
-    handleActionResult(result, true);
+    if (result.success) {
+      setSuccess(result.message, false);
+      router.push(`/admin/products/${result.data._id}/edit`);
+    } else {
+      setError(result.message);
+    }
   };
 
   const updateProduct = async (data: ProductFormData) => {
