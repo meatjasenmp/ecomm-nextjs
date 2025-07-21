@@ -28,10 +28,9 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     defaultValues: getDefaultValues(mode, initialData),
   });
 
-  const setSuccess = (message: string, shouldReset: boolean) => {
+  const setSuccess = (message: string) => {
     setSubmissionState("success");
     setSubmissionMessage(message);
-    if (shouldReset) methods.reset();
   };
 
   const setError = (message: string) => {
@@ -43,8 +42,8 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     setError("Failed to upload images. Please try again.");
   };
 
-  const handleActionResult = (result: any, shouldReset: boolean = false) => {
-    if (result.success) return setSuccess(result.message, shouldReset);
+  const handleActionResult = (result: any) => {
+    if (result.success) return setSuccess(result.message);
     setError(result.message);
   };
 
@@ -65,7 +64,7 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
 
     const result = await createProductForm(formData);
     if (result.success) {
-      setSuccess(result.message, false);
+      setSuccess(result.message);
       router.push(`/admin/products/${result.data._id}/edit`);
     } else {
       setError(result.message);
