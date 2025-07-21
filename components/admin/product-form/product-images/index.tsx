@@ -15,7 +15,7 @@ export default function ProductImages() {
   return (
     <InputContainer>
       <p className="text-small text-foreground-500">
-        Product Images: Upload at least one image
+        Product Images: Upload images (optional)
       </p>
       <Controller
         control={control}
@@ -42,15 +42,6 @@ export default function ProductImages() {
             {imagesError && <ErrorDisplay error={imagesError} />}
           </div>
         )}
-        rules={{
-          required: "At least one image is required",
-          validate: (value) => {
-            if (!value || value.length === 0) {
-              return "At least one image is required";
-            }
-            return true;
-          },
-        }}
       />
     </InputContainer>
   );

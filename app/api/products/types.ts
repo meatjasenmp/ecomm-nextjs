@@ -18,7 +18,7 @@ export const ProductSchema = z.object({
     .min(1, "At least one category is required"),
   images: z
     .union([z.array(z.instanceof(File)), z.array(ImageSchema)])
-    .refine((images) => images.length > 0, "At least one image is required"),
+    .default([]),
   price: z.number().min(1, "Price must be greater than 0"),
   discount: z.number().min(0, "Discount cannot be negative").optional(),
   isPublished: z.boolean().default(true),

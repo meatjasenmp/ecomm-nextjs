@@ -6,5 +6,6 @@ export const getCategoryIds = (categories: Category[]): string[] => {
 };
 
 export const getImageIds = (images: Image[]): string[] => {
+  if (!images || images.length === 0) return [];
   return images.map((img) => img._id).filter(Boolean) as string[];
 };

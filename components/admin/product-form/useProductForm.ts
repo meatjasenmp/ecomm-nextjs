@@ -51,6 +51,7 @@ export function useProductForm({ mode, initialData }: UseProductFormOptions) {
     };
   };
 
+  // TODO: Make images optional in the API. So we don't block form submission if image upload failed. We can implement a static fallback image in the UI if no images are provided.
   const createProduct = async (data: ProductFormData) => {
     let formData;
     try {

@@ -1,6 +1,7 @@
 import { apiRequest, getInternalApiUrl } from "@/lib/api-utils";
 import { Image } from "@/app/api/images/types";
 
+// TODO: Make images optional in the API. So we don't block form submission if image upload failed. We can implement a static fallback image in the UI if no images are provided.
 export function useProductImages() {
   const uploadImages = async (images: File[]): Promise<Image[]> => {
     const formData = new FormData();
@@ -13,6 +14,8 @@ export function useProductImages() {
   };
 
   const processImages = async (images: (File | Image)[]): Promise<Image[]> => {
+    if (!images || images.length === 0) return [];
+
     const filesToUpload = images.filter((img) => img instanceof File) as File[];
     if (filesToUpload.length === 0) return images as Image[];
     const uploadedImages = await uploadImages(filesToUpload);
